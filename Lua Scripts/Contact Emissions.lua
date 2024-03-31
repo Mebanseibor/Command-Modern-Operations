@@ -1,4 +1,15 @@
-local function check_for_emisions(i_contact_list)
+local function print_contacts_emisions(i_contact_list)
+    local function analyse_emissions(lf_emissions)
+        if #lf_emissions == 0 then
+            print("    -No Emission was detected")
+        else
+            for i=1,#lf_emissions do
+                print("    -Emission of \""..lf_emissions[i].sensor_name.."\" was detected")
+                print("        -Emission dbid: "..lf_emissions[i].sensor_dbid)
+            end
+        end
+    end
+
     if #i_contact_list == 0 then
         print("-----No contacts-----")
         print("-----END-----")
@@ -7,27 +18,12 @@ local function check_for_emisions(i_contact_list)
     for i=1,#i_contact_list do
         local _contact = i_contact_list[i]
         local _emission = _contact.emissions
-        if _emission==nil then _emission = "nil" end
         local _actual_guid = _contact.actualunitid
         local _actual_name = ScenEdit_GetUnit({guid=_actual_guid}).name
         print("Actual name: "..tostring(_actual_name))
         print("Contact: ".._contact.name)
         print("Emission: ")
-
-        local conclusion = "Unknown"
-        if #_emission == 0 then
-            print("    -No Emission was detected")
-        else
-            for i=1,#_emission do
-                print("    -Emission of \"".._emission[i].sensor_name.."\" was detected")
-                print("        -Emission dbid: ".._emission[i].sensor_dbid)
-                if(_emission[i].sensor_dbid == 970)then
-                    conclusion = "Friendly"
-                    --n=nuetral, x=nuetral, h=hostile, f=friendly, u=unfirendly
-                    break
-                end
-            end
-        end
+        analyse_emissions(_emission)
         print("    -Potential Matches: ")
         if tostring(_contact.potentialmatches)=="nil" then
             print("        None")
@@ -38,7 +34,6 @@ local function check_for_emisions(i_contact_list)
                 print("        Match "..i..": (".._potential_type..")\t".._potential_name)
             end
         end
-        print(conclusion)
         print("")
     end
     print("-----END-----")
@@ -47,6 +42,6 @@ end
 print("-----START-----")
 local v_side = "Blue"
 local v_contact_list = ScenEdit_GetContacts(v_side)
-check_for_emisions(v_contact_list)
+print_contacts_emisions(v_contact_list)
 print("")
 print("")
