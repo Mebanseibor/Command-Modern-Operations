@@ -9,7 +9,7 @@ Functions:
         Contact:
             is_any_contact_in_area(side, area)
         EMCON:
-            set_radar_state(guid,<0,1>)
+            set_radar_state(guid,<0/1>)
             flip_radar_state(guid)
         Unit Group:
             is_subtype_in_unitlist(unit_group,subtype_number)
