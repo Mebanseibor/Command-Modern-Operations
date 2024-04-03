@@ -12,7 +12,7 @@
 
 
 -----Checks if a table is empty or not-----
-local function is_table_empty(lf_table)
+local function is_empty(lf_table)
     if lf_table==nil or #lf_table==0 then return true
     else return false end
 end
@@ -51,7 +51,7 @@ local function rename_standardzone_rp_name(i_side, i_zone_name,i_prefix)
     local _zone_area = _zone.area -- Gets the zone's area
     
     --Error Handling
-    if is_table_empty(_zone_area) then
+    if is_empty(_zone_area) then
         print("Warning: Standard Zone \'"..i_zone_name.."\' has no RPs")
         return -1
     end
