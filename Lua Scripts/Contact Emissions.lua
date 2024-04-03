@@ -1,4 +1,5 @@
 local function print_contacts_emisions(i_contact_list)
+    --Local Functions--
     local function is_table_empty(lf_table)
         if lf_table==nil or #lf_table == 0 then return true
         else return false end
@@ -13,8 +14,7 @@ local function print_contacts_emisions(i_contact_list)
             end
         end
     end
-
-    function print_potential_matches(lf_contact)
+    local function print_potential_matches(lf_contact)
         if lf_contact.potentialmatches==nil or #(lf_contact.potentialmatches)==0 then
             print("    None")
         else
@@ -34,6 +34,7 @@ local function print_contacts_emisions(i_contact_list)
         end
     end
 
+    --Function Body--
     if is_table_empty(i_contact_list) then
         print("-----No contacts-----")
         return -1
