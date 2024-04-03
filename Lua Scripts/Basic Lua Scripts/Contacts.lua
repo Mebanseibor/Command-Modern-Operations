@@ -1,5 +1,5 @@
 -----Checks if a table is empty or not-----
-local function is_table_empty(lf_table)
+local function is_empty(lf_table)
     if lf_table==nil or #lf_table==0 then return true
     else return false end
 end
@@ -14,7 +14,7 @@ local v_contact_list = ScenEdit_GetContacts(v_side)   -- Parameters: Side
 
 -----Get Last Contact-----
 local function get_last_contact(i_contact_list)
-    if(is_table_empty(i_contact_list)) then
+    if(is_empty(i_contact_list)) then
         print("No contacts in list")
         return -1
     end
