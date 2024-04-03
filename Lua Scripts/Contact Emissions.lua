@@ -4,13 +4,14 @@ local function print_contacts_emisions(i_contact_list)
         if lf_table==nil or #lf_table == 0 then return true
         else return false end
     end
-    local function print_emissions(lf_emissions)
-        if is_table_empty(lf_emissions) then
+    local function print_emissions(lf_contact)
+        print("Emission: ")
+        local _emissions = lf_contact.emissions
+        if is_table_empty(_emissions) then
             print("    -No Emission was detected")
         else
-            for k,_emission in pairs(lf_emissions) do
-                print("    -Emission of \"".._emission.sensor_name.."\" was detected")
-                print("        -Emission dbid: ".._emission.sensor_dbid)
+            for k,_emission in pairs(_emissions) do
+                print("    -Emission of \"".._emission.sensor_name.."\" was detected (dbid: ".._emission.sensor_dbid..")")
             end
         end
     end
@@ -40,13 +41,11 @@ local function print_contacts_emisions(i_contact_list)
         return -1
     end
     for k,_contact in pairs(i_contact_list) do
-        local _emission = _contact.emissions
         local _actual_guid = _contact.actualunitid
         local _actual_name = ScenEdit_GetUnit({guid=_actual_guid}).name
         print("Actual name: "..tostring(_actual_name))
         print("Contact: ".._contact.name)
-        print("Emission: ")
-        print_emissions(_emission)
+        print_emissions(_contact)
         print_potential_matches(_contact)
         print("")
     end
