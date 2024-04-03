@@ -3,10 +3,11 @@
         RP: Abbreviation for Reference Points
     
     Variable pre-fix Meanings:
-        v_      [v_abc]   :   main body variables
-        i_      [i_abc]   :   variable that is inputted into a function (as a parameter)
-        _       [_abc]    :   variables defined only within a function
-        lf_     [lf_abc]  :   variable defined only within a local function (when a local function is within a function)
+        |pre-fix|   |Example|   |Meaning|
+        v_          v_abc       main body variables
+        i_          i_abc       variable that is inputted into a function (as a parameter)
+        _           _abc        variables defined only within a function
+        lf_         lf_abc      variable defined only within a local function (when a local function is within a function)
 ]]--
 
 
