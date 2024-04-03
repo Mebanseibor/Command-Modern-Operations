@@ -87,6 +87,6 @@ end
 local v_side = "Blue"
 local v_unit_guid = ""
 local v_radar_state = ""
-local v_zone_name = "Over Guwahati"
+local v_zone_name = ""
 
 ----- To do -----
