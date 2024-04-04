@@ -13,14 +13,10 @@ Command Modern Operations AHK⌨️
         space+w     mission window
         space+a     manual attack
         space+q     switch sides
-
-
-
     -----Base Modifier Key-----
     if(GetKeyState(space) == "D")
         space::space
         return
     ----------------------------
-    
     Note:
         -The chosen base modifier key 'space', won't be able to send continuos signals to the device until the script is terminated
