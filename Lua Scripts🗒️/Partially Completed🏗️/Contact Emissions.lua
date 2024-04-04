@@ -30,7 +30,7 @@ local function print_contacts_emisions(i_contact_list)
                 _potential_match_count = _potential_match_count+1
                 local  _potential_type = tostring(_potentialmatch.TYPE)
                 local  _potential_name = tostring(_potentialmatch.NAME)
-                print("    -Match ".._potential_match_count..": (".._potential_type..")\t".._potential_name)
+                print("    -Match ".._potential_match_count..":\t"..string.sub(_potential_type,1,3).."\t".._potential_name)
             end
         end
     end
@@ -52,7 +52,7 @@ local function print_contacts_emisions(i_contact_list)
 end
 
 print("-----START-----")
-local v_side = "Blue"
+local v_side = "Red"
 local v_contact_list = ScenEdit_GetContacts(v_side)
 print_contacts_emisions(v_contact_list)
 print("-----END-----")
