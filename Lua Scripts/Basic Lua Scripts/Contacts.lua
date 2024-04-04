@@ -1,4 +1,4 @@
------Checks if a table is empty or not-----
+-----Checks if a data/table is empty or not-----
 local function is_empty(lf_data)
     if lf_data==nil or #lf_data==0 then return true
     else return false end
