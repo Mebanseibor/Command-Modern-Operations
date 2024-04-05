@@ -22,7 +22,7 @@ local msg=[[
 ]]
 
 
------**UTILITY FUNCTIONS**-----
+-----**GENERAL UTILITY FUNCTIONS**-----
 local function is_empty(data)
     if data==nil or #data==0 then return true end
     return false
