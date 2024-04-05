@@ -5,7 +5,7 @@
 
 <h4>Purpose</h4>
   <p>This is a side project that I'm working on by sharing resources for "Command: Modern Operations"</p>
-  <br>
+
 <h4>Resources</h4>
 <ul>
   <li>HTML 🌐
@@ -49,7 +49,7 @@
   </li>
   <li>Other Tools 🛠️</li>
     <ul>
-        <li>Command Modern Operations AHk</li>
+        <li>Command Modern Operations AHK</li>
     </ul>
   <li>Sound Effects 🔊</li>
 </ul>
