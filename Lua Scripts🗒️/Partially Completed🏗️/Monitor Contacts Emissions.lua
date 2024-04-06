@@ -1,4 +1,4 @@
-function monitor_contacts_emissions(i_side)
+function monitor_contacts_emissions(_side)
     local function analyse_emission(_contact)
         if _contact.emissions == nil then
             print("No Emission")
@@ -13,7 +13,7 @@ function monitor_contacts_emissions(i_side)
             end
         end
     end
-    local _contact_list = ScenEdit_GetContacts(i_side)
+    local _contact_list = ScenEdit_GetContacts(_side)
     for k,_contact in pairs(_contact_list) do
         print("Name: "..ScenEdit_GetUnit({guid = _contact.actualunitid}).name)
         analyse_emission(_contact)
@@ -23,8 +23,7 @@ function monitor_contacts_emissions(i_side)
     
 end
 print("-----START-----")
-local v_side = "Blue"
-monitor_contacts_emissions(v_side)
+monitor_contacts_emissions(ScenEdit_PlayerSide())
 print("-----END-----")
 print("")
 print("")

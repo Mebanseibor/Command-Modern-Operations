@@ -1,29 +1,18 @@
---[[
-    Functions:
-        HTML_Init()
-        HTML_h(msg,heading,heading size[,close?])
-        HTML_p(msg,[text,close?])
-]]--
-
------**GENERAL UTILITY FUNCTIONS**-----
---<<Booleans>>--
-local function is_boolean(data)return type(data)=="boolean" end
-local function is_not_boolean(data)return type(data)~="boolean" end
-local function is_number(data)return type(data)=="number" end
-local function is_not_number(data)return type(data)~="number" end
-local function is_table(data)return type(data)=="table" end
-local function is_not_table(data)return type(data)~="table" end
-local function is_string(data)return type(data)=="string" end
-local function is_not_string(data)return type(data)~="string" end
-local function is_nil(data)return type(data)=="nil" end
-
-local function is_empty(data)
-    if data==nil or (is_not_boolean(data) and is_not_number(data) and #data == 0) then return true
-    else return false end
+--<<ADVANCE HTML DIALOG related functions>>--
+function is_selected(selection)
+    if selection=="Select" then return false end
+    return true
 end
 
---<<HTML Related Functions>>--
-local function is_HTML_valid(_msg)
+function trim(data)
+    data = string.gsub(data, "^'", "") -- Removes starting quote
+    data = string.gsub(data, "'$", "") -- Removes ending quote
+    return data
+end
+---------------------------------------------
+
+--<<HTML Tag Functions>>--
+function is_HTML_valid(_msg)
     if is_nil(_msg) then
         error("Insufficient Parameter: is_HTML_valid(_msg)",2)
     end
@@ -34,7 +23,7 @@ local function is_HTML_valid(_msg)
     end
 end
 
-local function is_table_valid(headers, data_sets)
+function is_table_valid(headers, data_sets)
     --for titles--
     if is_not_table(headers) then
         error("Invalid Parameter #2: Expected Table",3)
@@ -61,11 +50,11 @@ local function is_table_valid(headers, data_sets)
     end
 end
 
-local function HTML_Init()
+function HTML_Init()
     return {""}
 end
 
-local function HTML_h(_msg,_header,_size,_end)
+function HTML_h(_msg,_header,_size,_end)
     -- Error Handling
     is_HTML_valid(_msg)
     if is_not_string(_header) then
@@ -90,7 +79,7 @@ local function HTML_h(_msg,_header,_size,_end)
 end
     
 
-local function HTML_p(_msg,text,_end)
+function HTML_p(_msg,text,_end)
     is_HTML_valid(_msg)
     
     --Check for text
@@ -114,13 +103,13 @@ local function HTML_p(_msg,text,_end)
     end
 end
 
-local function HTML_br(_msg)
+function HTML_br(_msg)
     is_HTML_valid(_msg)
     _msg[1]=_msg[1].."<br>"
     return
 end
 
-local function HTML_li(_msg,items)
+function HTML_li(_msg,items)
     is_HTML_valid(_msg)
     if is_not_table(items) then
         error("Invalid Parameter #2: Expected a table",2)
@@ -133,7 +122,7 @@ local function HTML_li(_msg,items)
     end
 end
 
-local function HTML_table(_msg,headers,data_sets)
+function HTML_table(_msg,headers,data_sets)
     --{{row1},{row2}}
     is_HTML_valid(_msg)
     is_table_valid(headers,data_sets)
@@ -161,7 +150,7 @@ local function HTML_table(_msg,headers,data_sets)
     return true
 end
 
-local function HTML_option(_msg,script_name,text)
+function HTML_option(_msg,script_name,text)
     is_HTML_valid(_msg)
     if is_empty(script_name) and is_not_string(script_name) then
         error("Invalid Parameter #2: Expected non-empty String",2)
@@ -171,48 +160,3 @@ local function HTML_option(_msg,script_name,text)
     end
     _msg[1]=_msg[1].."<option value=\""..script_name.."\">"..text.."</option>"
 end
-
-
-
-
-
------**MAIN BODY**-----
-local function Test()
-    local collected_data={}
-    local function get_data()
-        local contact_list=ScenEdit_GetContacts(ScenEdit_PlayerSide())
-        if is_empty(contact_list) then collected_data=nil return end
-        for k,contact in pairs(contact_list) do
-            table.insert(collected_data,{tostring(contact.name),tostring(contact.type_description),tostring(contact.speed)})
-        end
-    end
-    get_data()
-
-    local msg2 = HTML_Init()
-    msg2[1]=[[
-        <head>
-        <style>
-            table {
-                border-collapse: separate;
-                border-spacing: 10px; /* Adjust spacing as needed */
-            }
-            th {
-                font-size: 18
-            }
-            td {
-                padding: 10px; /* Adjust padding as needed */
-
-            }
-            </style>
-        </head>
-        <h3>Details on Contacts</h3>
-    ]]
-
-    if not(HTML_table(msg2,{"Name","Type","Speed"},collected_data)) then
-        msg2[1]=msg2[1].."<p>No contacts</p>"
-    end
-    UI_CallAdvancedHTMLDialog("Test",msg2[1],{"OK"})
-end
-Test()
-print("Done")
-print("")
