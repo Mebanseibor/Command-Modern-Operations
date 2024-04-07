@@ -14,8 +14,7 @@ end
 
 
 -----**TRIGGERS**-----
-local function ScenEdit_AddEventTrigger_Timer(event_name, timer)
-    local t = ScenEdit_SetEventTrigger(event_name,{mode = 'add', description = string.format("Timer of %s seconds",timer)})
-    print(t)
+local function ScenEdit_AddEventTrigger_Timer(_event, timer)
+    ScenEdit_SetTrigger({mode='add',type="RegularTime", interval=4,description=string.format("Timer of %s seconds",timer)})
 end
 ---------------------

@@ -23,6 +23,9 @@ function monitor_contacts_emissions(_side)
     
 end
 print("-----START-----")
+if is_empty(VP_GetSides()) then
+    error("No Sides Exist",1)
+end
 monitor_contacts_emissions(ScenEdit_PlayerSide())
 print("-----END-----")
 print("")

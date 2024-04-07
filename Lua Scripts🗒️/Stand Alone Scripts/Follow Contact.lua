@@ -36,30 +36,40 @@ local function su_sc()
     local time_to_waypoint=range_m/speed_mps
     print("Seconds to waypoint: "..time_to_waypoint.."(~"..(time_to_waypoint/60).." minutes)")
     
-    local contact_angle=(90-_contact.heading)%360
-    printv("Contact Angle",contact_angle)
+    -- Given angles of two vectors
+    local contact_angle = (90 - _contact.heading) % 360
+    local unit_angle = (90 - _unit.heading) % 360
 
-    local unit_angle=(90-_unit.heading)%360
-    printv("Contact Angle",unit_angle)
-
+    -- Convert angles to radians
     local contact_radians = math.rad(contact_angle)
-    printv("Contact Radians",contact_radians)
-
     local unit_radians = math.rad(unit_angle)
-    printv("Unit Radians",unit_radians)
 
-    local contact_cos=math.cos(contact_radians)
-    printv("Contact cos",contact_cos)
-    local contact_sin=math.sin(contact_radians)
-    printv("Contact sin",contact_sin)
+    -- Calculate x and y components of each vector
+    local contact_x = math.cos(contact_radians)
+    local contact_y = math.sin(contact_radians)
 
-    local unit_cos=math.cos(unit_radians)
-    printv("Unit cos",unit_cos)
-    local unit_sin=math.sin(unit_radians)
-    printv("Unit sin",unit_sin)
+    local unit_x = math.cos(unit_radians)
+    local unit_y = math.sin(unit_radians)
 
-    printv("Sum of Cos",contact_cos+unit_cos)
-    printv("Sum of Sin",contact_sin+unit_sin)
+    -- Sum the x and y components
+    local resultant_x = contact_x + unit_x
+    local resultant_y = contact_y + unit_y
+
+    -- Calculate the magnitude of the resultant vector
+    local magnitude = math.sqrt(resultant_x^2 + resultant_y^2)
+
+    -- Calculate the angle of the resultant vector
+    local resultant_angle = math.deg(math.atan2(resultant_y, resultant_x))
+
+    -- Ensure angle is between 0 and 360 degrees
+    if resultant_angle < 0 then
+        resultant_angle = resultant_angle + 360
+    end
+
+    -- Print the resultant vector
+    print("Resultant Vector:")
+    printv("Magnitude:", magnitude)
+    printv("Angle:", resultant_angle)
 end
 su_sc()
 print("-----DONE-----")
