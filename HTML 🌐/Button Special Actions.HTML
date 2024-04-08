@@ -17,14 +17,8 @@
 .Button:hover{
   background-color: white;
 }
-.Button.clicked{
-  background-color: black;
-}
-#idFollowContact{
+#BtnFollowContact{
   background-image:url("https://cdn.akamai.steamstatic.com/steam/apps/1076160/header.jpg?t=1706799857");
-}
-#id{
-  background-image: ;
 }
 </style>
 </head>
@@ -37,15 +31,19 @@
   <option value="]]..c..[[">End Turn</option>
 </select>
 
-<button class="Button" id="idFollowContact" onclick="selectOption(']]..a..[[')">Follow Contact</button><br>
-<button class="Button" id="idFollowContact2" onclick="selectOption(']]..b..[[')">Display Contact Emission</button><br>
-<button class="Button" onclick="selectOption(']]..c..[[')">End Turn</button>
+<button class="Button" id="BtnFollowContact" onclick="selectOption(']]..a..[[',this)">Follow Contact</button><br>
+<button class="Button" id="BtnDisplayContactEmission" onclick="selectOption(']]..b..[[',this)">Display Contact Emission</button><br>
+<button class="Button" id="BtnEndTurn" onclick="selectOption(']]..c..[[',this)">End Turn</button>
 
 <script>
-function selectOption(optionValue) {
+function selectOption(optionValue,Button) {
   document.getElementById("mySelect").value = optionValue;
-  document.getElementById("idFollowContact2").style.backgroundColor = "black";
-
+  var buttons = document.getElementsByClassName("Button");
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].style.backgroundColor = "lightskyblue";
+  }
+  Button.style.backgroundColor = "blue";
+  Button.style.backg
 }
 </script>
 

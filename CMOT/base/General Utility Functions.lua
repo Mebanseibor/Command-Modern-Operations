@@ -112,9 +112,9 @@ function TOSTRING(data)
     elseif is_table(data) then --is table
         local str = "{"
         for k,v in pairs(data) do
-            str = str..TOSTRING(v)..","
+            str = str..TOSTRING(v)..", "
         end
-        str = string.sub(str, 1, -2)
+        str = string.sub(str, 1, -3)
         str=str.."}"
         return str
     elseif is_string(data) then --is string
