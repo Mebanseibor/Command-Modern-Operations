@@ -20,10 +20,10 @@ ScenEdit_RunScript(CMOT.."base/HTML Functions.lua")
 ]]--
 -----<<Buttons>>-----
 -----General-----
-local script_contact_emissions="/CMOT/Contact Emissions"
-local script_monitor_contacts_missions="/CMOT/Monitor Contacts Emissions"
+local script_contact_emissions="/CMOT/Scripts/CMOT/Contact Emissions"
+local script_monitor_contacts_emissions="/CMOT/Scripts/CMOT/Monitor Contacts Emissions"
 -----Selected Unit-----
-local script_follow_contact = "/CMOT/Follow Contact"
+local script_follow_contact = "/CMOT/Scripts/CMOT/Follow Contact"
 
 
 
@@ -40,7 +40,7 @@ msg[1]=[[
         <select name="General">]]
             HTML_option(msg,"Select")
             HTML_option(msg,script_contact_emissions)
-            HTML_option(msg,script_monitor_contacts_missions)
+            HTML_option(msg,script_monitor_contacts_emissions)
 msg[1]=msg[1]..
         [[</select>
         <br>
@@ -79,8 +79,8 @@ end
 
 -----**EVALUATION**-----
 -----<<Selector: General>>-----
-if is_selected(button[General]) then
-    local selection=trim(button[General])
+if is_selected(button["General"]) then
+    local selection=trim(button["General"])
 
     if selection==script_contact_emissions then
         run_script(script_contact_emissions)

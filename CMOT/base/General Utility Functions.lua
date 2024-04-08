@@ -38,19 +38,18 @@ function is_not_string(data)return type(data)~="string" end
 function is_nil(data)return type(data)=="nil" end
 
 function is_empty(data)
-    if data==nil or (is_not_boolean(data) and is_not_number(data)) then
-        if is_table(data) then
+    if is_nil(data) or (is_not_boolean(data) and is_not_number(data)) then
+        if is_nil(data) then return true end --for nil values
+        if is_table(data) then          --for tables
             for k,v in pairs(data) do
                 return false
             end
             return true
-        end
-        if data =="" then
+        elseif data =="" then           --for strings
             return true
         else
             return false
         end
-        
     else return false end
 end
 
@@ -79,15 +78,13 @@ function run_script(script,folder)
         error("Invalid Parameter #1: Expected non-empty String",2)
     end
     if is_empty(folder) then
-        if is_nil(CMOT) then
-            folder = "" --Searches script in "Lua" Folder
-        else
-            folder = CMOT.."Scripts/"   --Searches script in CMOT\Scripts\
-        end
+        folder = ""
     elseif is_not_string(folder) then
+        print(type(folder))
         error("Invalid Parameter #2: Expected a string",2)
-    elseif folder:sub(-1)~="/" then
-        error("Invalid Parameter #2: Should end in a \'/\'",2)
+    end
+    if folder:sub(-1)~="/" then
+        folder=folder.."/"
     end
     Tools_lua = folder..script..".lua"
     ScenEdit_RunScript(Tools_lua)

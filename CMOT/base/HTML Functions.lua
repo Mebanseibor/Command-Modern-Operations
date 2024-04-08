@@ -155,7 +155,7 @@ function HTML_option(_msg,script_name,text)
     if is_empty(script_name) and is_not_string(script_name) then
         error("Invalid Parameter #2: Expected non-empty String",2)
     end
-    if is_empty(text) then
+    if is_nil(text) or is_empty(text) then
         text=script_name
     end
     _msg[1]=_msg[1].."<option value=\""..script_name.."\">"..text.."</option>"
