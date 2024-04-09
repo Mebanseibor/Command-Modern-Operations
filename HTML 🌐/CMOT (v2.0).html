@@ -1,3 +1,4 @@
+local msg = [[
     <html>
     <head>
         <title>Buttons</title>
@@ -30,7 +31,7 @@
                 padding-bottom: 0.2%;
             }
             .DivTools3{
-                background-color:aquamarine;
+                background-color: aquamarine;
                 padding-top: 0.2%;
                 padding-left: 0.2%;
                 padding-right: 0.2%;
@@ -47,7 +48,6 @@
                 background-size:contain;
                 background-repeat:no-repeat;
                 background-color: lightskyblue;
-                cursor: pointer;
             }
             .BtnTools1{
                 width: 128px;
@@ -57,7 +57,6 @@
                 background-size:contain;
                 background-repeat:no-repeat;
                 background-color: rgb(144, 255, 249);
-                cursor: pointer;
             }
             .BtnTools2{
                 width: 128px;
@@ -67,7 +66,6 @@
                 background-size:contain;
                 background-repeat:no-repeat;
                 background-color: lightskyblue;
-                cursor: pointer;
             }
             .BtnTools3{
                 width: 128px;
@@ -77,8 +75,8 @@
                 background-size:contain;
                 background-repeat:no-repeat;
                 background-color: burlywood;
-                cursor: pointer;
             }
+            
             #inputWindow {
                 position: absolute;
                 top: 50%;
@@ -97,6 +95,9 @@
                 right: 5px;
                 cursor: pointer;
             }
+            .InputEntity{
+                display: none;
+            }
             #BtnCivilianAirportsatRP{
                 
             }
@@ -108,6 +109,7 @@
             #BtnRenameRp{
             }
         </style>
+        
     </head>
     <body>
         <h2 align="center">CMOT</h2>
@@ -120,7 +122,6 @@
             <input class="InputEntity" id="string2" type="text" ><br><br>
             <button onclick="submitInput()">Submit</button>
         </div>
-        <h2 align="center">Demonstration on Buttons</h2>
         <select class="Select" id="SelectTool" name="SelectTool">
             <option></option>
             <option value="Civilian Airports At RP">Option a1</option>
@@ -134,21 +135,20 @@
             <option value="Compare Units">Option d1</option>
         </select>
         <div class="DivEditorTools">
-            <h3 class>Scenario Editor Tools</h3>
-            <button class="BtnEditorTools" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this,'Civilian Airports At RP')" id="BtnCivilianAirportsAtRP">Civilian Airports<br>At RP</button>
-            <button class="BtnEditorTools" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this,'Random Weather')" id="BtnRandomWeather">Random Weather</button>
+            <button class="BtnEditorTools" onclick="onclickBtnTool(this,'Civilian Airports At RP')" id="BtnCivilianAirportsAtRP">Civilian Airports<br>At RP</button>
+            <button class="BtnEditorTools" onclick="onclickBtnTool(this,'Random Weather')" id="BtnRandomWeather">Random Weather</button>
         </div>
         <div class="DivTools1">
-            <button class="BtnTools1" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this,'Investigate Contact')" id="BtnInvestigateContact">Investigate Contact</button>
-            <button class="BtnTools1" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this,'Display Contact Information')" id="BtnDisplayContactInformation">Display Contact Information</button>
+            <button class="BtnTools1" onclick="onclickBtnTool(this,'Investigate Contact')" id="BtnInvestigateContact">Investigate Contact</button>
+            <button class="BtnTools1" onclick="onclickBtnTool(this,'Display Contact Information')" id="BtnDisplayContactInformation">Display Contact Information</button>
         </div>
         <div class="DivTools2">
-            <button class="BtnTools2" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this, 'Rename RP')" id="BtnRenameRP">Rename RP</button>
+            <button class="BtnTools2" onclick="onclickBtnTool(this, 'Rename RP')" id="BtnRenameRP">Rename RP</button>
         </div>
         <div class="DivTools3">
-            <button class="BtnTools3" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this, 'Compare Units')" id="BtnCompareUnits">Compare Units</button>
+            <button class="BtnTools3" onclick="onclickBtnTool(this, 'Compare Units')" id="BtnCompareUnits">Compare Units</button>
         </div>
-        
+
         <script>
             var clickedBtn=null;
             var inputWindow = document.getElementById("inputWindow");
@@ -156,7 +156,6 @@
             var string1 = document.getElementById("string1");
             var labelstring2 = document.getElementById("labelstring2");
             var string2 = document.getElementById("string2");
-
             function onmouseenterBtnTool(BtnTool) {
                 if(clickedBtn!==BtnTool){
                     BtnTool.style.backgroundImage = "none";
@@ -165,15 +164,12 @@
                 };
             }
 
-            function onmouseleaveBtnTool(BtnTool) {
-                if(clickedBtn!==BtnTool){
-                    BtnTool.style = "";
-                };
-            }
-
             function onclickBtnTool(BtnTool, SelectValue){
-                if(clickedBtn==BtnTool){   // Same Button is pressed
-                    clickedBtn.style.backgroundColor =""
+                if(clickedBtn==null){       // For No Button initially Active
+                    
+                }
+                else if(clickedBtn==BtnTool){   // Same Button is pressed
+                    clickedBtn.style.backgroundColor ="";
                     clickedBtn.style.backgroundImage = "none";
                     clickedBtn = null;
                     resetWindow();
@@ -191,52 +187,58 @@
                 BtnTool.style.backgroundColor = "lightgreen"
                 switch(SelectValue){
                     case "Civilian Airports at RP":
-                        display(labelstring1, "Side" , string1);
+                        labelstring1.style.display="block";
+                        labelstring1.innerHTML="Side";
+                        string1.style.display="block";
                         break;
                     case "Random Weather":
-                        display(labelstring1, "Rate of Change" , string1);
-                        display(labelstring2, "Degree of Change" , string2);
+                        labelstring1.style.display="block";
+                        labelstring1.innerHTML="Rate of Change";
+                        string1.style.display="block";
+
+                        labelstring2.style.display="block";
+                        labelstring2.innerHTML="Degree of Change";
+                        string2.style.display="block";
                         break;
                     default:
                         break;
                 }
                 openInputWindow();
             }
-            
+                        
             // Functions for Input Window
             function openInputWindow(){
-                inputWindow.style.display = "block";
+                inputWindow.style.display="block";
             }
             function closeInputWindow(){
                 inputWindow.style.display = "none";
-                resetWindow();
                 if(clickedBtn!==null){
                     onclickBtnTool(clickedBtn, null);
                 }
             }
             function submitInput(){
                 alert(
-                    labelstring1.textContent+": "+string1.value+"\n"+
-                    labelstring2.textContent+": "+string2.value
+                    labelstring1.innerHTML+": "+string1.value+"\n"+
+                    labelstring2.innerHTML+": "+string2.value
                 );
                 resetWindow();
                 closeInputWindow();
-                
             }
             function resetWindow(){
                 clear(labelstring1, string1);
-                clear(labelstring2, string2)
+                clear(labelstring2, string2);
             }
             function clear(label,input){
                 label.style.display="none";
                 input.style.display="none";
                 input.value = "";
             }
-            function display(label, label_string , input){
-                label.style.display="block";
-                label.innerHTML=label_string;
-                input.style.display="block";
-            }
         </script>
     </body>
     </html>
+]]
+
+local buttons = UI_CallAdvancedHTMLDialog("Test", msg, {"Submit","Cancel"})
+for k, button in pairs(buttons) do
+    print(k.."\t"..button)
+end
