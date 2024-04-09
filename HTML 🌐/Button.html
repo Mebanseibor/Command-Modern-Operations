@@ -1,18 +1,90 @@
-<html>
-<head>
-    <title>Buttons</title>
-    <style>
-        .button{
-            width: 256px;
-            height: 32px;
-            background-image:url("https://internet.lpu.in/images/customizeimages/logo.png");
-            background-repeat: no-repeat;
-        }
-    </style>
-    <script></script>
-</head>
-<body>
-    <h2>Demonstration on Buttons</h2>
-    <button class="button">Button 1</button>
-</body>
-</html>
+    <html>
+    <head>
+        <title>Buttons</title>
+        <style>
+            body {
+            background-color: #222; /* Dark background color */
+            color: #fff; /* Text color */
+            }
+            .DivTools1{
+                background-color: lightseagreen;
+                padding-top: 0.2%;
+                padding-left: 0.2%;
+                padding-right: 0.2%;
+                padding-bottom: 0.2%;
+            }
+            .DivTools2{
+                background-color: mediumseagreen;
+                padding-top: 0.2%;
+                padding-left: 0.2%;
+                padding-right: 0.2%;
+                padding-bottom: 0.2%;
+            }
+            .BtnTools1{
+                width: 128px;
+                height: 72px;
+                color: black;
+                border-radius: 10%;
+                background-size:contain;
+                background-repeat:no-repeat;
+                background-color: lightseagreen;
+            }
+            .BtnTools2{
+                width: 128px;
+                height: 72px;
+                color: black;
+                border-radius: 10%;
+                background-size:contain;
+                background-repeat:no-repeat;
+                background-color: mediumseagreen;
+            }
+            #BtnInvestigateContact{
+                background-image:url("https://raw.githubusercontent.com/Mebanseibor/Command-Modern-Operations/main/CMOT/Images/Investigate%20Contact%20(With%20Eye).png");
+            }
+            #BtnRenameRp{
+            }
+        </style>
+        <script>
+            var clickedBtn=null;
+            function onmouseenterBtnTool(BtnTool) {
+                if(clickedBtn!==BtnTool){
+                    BtnTool.style.backgroundImage = "none";
+                    BtnTool.style.backgroundColor = "whitesmoke";
+                    BtnTool.style.color = "black";
+                };
+            }
+
+            function onmouseleaveBtnTool(BtnTool) {
+                if(clickedBtn!==BtnTool){
+                    BtnTool.style = "";
+                    // BtnTool.style.backgroundImage = ""; // Remove inline background image style
+                    // BtnTool.style.backgroundColor = ""; // Remove inline background color style
+                    // BtnTool.style.color = "";
+                };
+            }
+
+            function onclickBtnTool(BtnTool){
+                if(clickedBtn !== null & clickedBtn!==BtnTool){ // Other button is pressed
+                    clickedBtn.style="";
+                }
+                else if(clickedBtn==BtnTool){   // Same Button is pressed
+                    BtnTool.style="";
+                    clickedBtn = null;
+                    return; 
+                };
+                clickedBtn=BtnTool;             // Action on the recently pressed button
+                BtnTool.style.backgroundImage = "none";
+                BtnTool.style.backgroundColor = "green"
+            }
+        </script>
+    </head>
+    <body>
+        <h2 align="center">Demonstration on Buttons</h2>
+        <div class="DivTools1">
+            <button class="BtnTools1" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this)" id="BtnInvestigateContact">Investigate Contact</button>
+        </div>
+        <div class="DivTools2">
+            <button class="BtnTools2" onmouseenter="onmouseenterBtnTool(this)" onmouseleave="onmouseleaveBtnTool(this)" onclick="onclickBtnTool(this)" id="BtnRenameRP">Rename RP</button>
+        </div>
+    </body>
+    </html>
