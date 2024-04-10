@@ -11,7 +11,9 @@
         is_nil(data)
         is_empty(data)
 
+        
         table_has_element(table,element)
+        table_length()          --accounts for tables with keys also
         printv(text,data)       --Meant for Faster Debugging by printing variable value with text
         TOSTRING(data)          --returns the data as string (Applies for tables too, but does print a nil or non-existant variable)
         
@@ -71,6 +73,22 @@ function table_has_element(_table,_element)
     end
     return false
 end
+
+function table_length(_table)
+    if is_nil(_table) then
+        return 0
+    end
+    if is_not_table(_table) then
+        error("Invalid Parameter: Expected a table", 2)
+    end
+    local count=0
+    for i in pairs(_table) do
+        count=count+1
+    end
+    return count
+end
+
+
 
 -----<<Scripts>>-----
 function run_script(script,folder)

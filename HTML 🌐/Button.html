@@ -1,4 +1,19 @@
-    <html>
+
+// function onmouseenterBtnTool(BtnTool) {
+    //     if(clickedBtn!==BtnTool){
+    //         BtnTool.style.backgroundImage = "none";
+    //         BtnTool.style.backgroundColor = "whitesmoke";
+    //         BtnTool.style.color = "black";
+    //     };
+    // }
+
+    // function onmouseleaveBtnTool(BtnTool) {
+    //     if(clickedBtn!==BtnTool){
+    //         BtnTool.style = "";
+    //     };
+    // }
+
+<html>
     <head>
         <title>Buttons</title>
         <style>
@@ -156,20 +171,8 @@
             var string1 = document.getElementById("string1");
             var labelstring2 = document.getElementById("labelstring2");
             var string2 = document.getElementById("string2");
+            resetWindow();
 
-            function onmouseenterBtnTool(BtnTool) {
-                if(clickedBtn!==BtnTool){
-                    BtnTool.style.backgroundImage = "none";
-                    BtnTool.style.backgroundColor = "whitesmoke";
-                    BtnTool.style.color = "black";
-                };
-            }
-
-            function onmouseleaveBtnTool(BtnTool) {
-                if(clickedBtn!==BtnTool){
-                    BtnTool.style = "";
-                };
-            }
 
             function onclickBtnTool(BtnTool, SelectValue){
                 if(clickedBtn==BtnTool){   // Same Button is pressed
@@ -190,7 +193,7 @@
                 BtnTool.style.backgroundImage = "none";
                 BtnTool.style.backgroundColor = "lightgreen"
                 switch(SelectValue){
-                    case "Civilian Airports at RP":
+                    case "Civilian Airports At RP":
                         display(labelstring1, "Side" , string1);
                         break;
                     case "Random Weather":
@@ -205,27 +208,22 @@
             
             // Functions for Input Window
             function openInputWindow(){
-                inputWindow.style.display = "block";
+                inputWindow.style.display="block";
             }
             function closeInputWindow(){
                 inputWindow.style.display = "none";
-                resetWindow();
                 if(clickedBtn!==null){
                     onclickBtnTool(clickedBtn, null);
                 }
             }
             function submitInput(){
-                alert(
-                    labelstring1.textContent+": "+string1.value+"\n"+
-                    labelstring2.textContent+": "+string2.value
-                );
+                
                 resetWindow();
                 closeInputWindow();
-                
             }
             function resetWindow(){
                 clear(labelstring1, string1);
-                clear(labelstring2, string2)
+                clear(labelstring2, string2);
             }
             function clear(label,input){
                 label.style.display="none";
