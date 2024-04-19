@@ -38,6 +38,7 @@ function is_not_table(data)return type(data)~="table" end
 function is_string(data)return type(data)=="string" end
 function is_not_string(data)return type(data)~="string" end
 function is_nil(data)return type(data)=="nil" end
+function is_not_nil(data)return type(data)~="nil" end
 
 function is_empty(data)
     if is_nil(data) or (is_not_boolean(data) and is_not_number(data)) then
