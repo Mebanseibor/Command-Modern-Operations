@@ -2,8 +2,12 @@
     Instructions:
         Setup:
             -Switch to Civilian Side
-            -Create a Standard Zone with zone name "CMOT CA"
-            -Use the DrawPolygon tool in the Area/Reference manager
+            -Create RPs for a Standard Zone
+                (Optional) Use the DrawPolygon tool in the Area/Reference manager to more easily create RPs
+                Note: The Zone need not be a Valid Enclosed Zone
+            -Create/Rename the Standard Zone as "CMOT CA"
+            
+            -Run the Script
 
         Airport Deletion:
             -DONT invividually delete any airport (Future fix will be implemented)
@@ -75,6 +79,70 @@
                     
 ]]--
 
+
+
+-----GENERAL UTILITY FUNCTIONS-----
+local function is_boolean(data)return type(data)=="boolean" end
+local function is_not_boolean(data)return type(data)~="boolean" end
+local function is_number(data)return type(data)=="number" end
+local function is_not_number(data)return type(data)~="number" end
+local function is_table(data)return type(data)=="table" end
+local function is_not_table(data)return type(data)~="table" end
+local function is_string(data)return type(data)=="string" end
+local function is_not_string(data)return type(data)~="string" end
+local function is_nil(data)return type(data)=="nil" end
+local function is_not_nil(data)return type(data)~="nil" end
+
+local function is_empty(data)
+    if is_nil(data) or (is_not_boolean(data) and is_not_number(data)) then
+        if is_nil(data) then return true end --for nil values
+        if is_table(data) then          --for tables
+            for k,v in pairs(data) do
+                return false
+            end
+            return true
+        elseif data =="" then           --for strings
+            return true
+        else
+            return false
+        end
+    else return false end
+end
+
+--<<Tables>>--
+local function table_has_element(_table,_element)
+    -- Error Handling
+    if is_not_table(_table) then
+        error("Invalid Parameter #1: Expected a table",2)
+    elseif is_empty(_element) then
+        error("Invalid Parameter #2: Expected a value",2)
+    end
+    if is_empty(_table) then
+        return false
+    end
+    for k,v in pairs (_table) do
+        if v==_element then
+            return true
+        end
+    end
+    return false
+end
+
+local function table_length(_table)
+    if is_nil(_table) then
+        return 0
+    end
+    if is_not_table(_table) then
+        error("Invalid Parameter: Expected a table", 2)
+    end
+    local count=0
+    for i in pairs(_table) do
+        count=count+1
+    end
+    return count
+end
+------------------------------
+
 local function CMOT_Aircrafts_Init()
     CMOT_CA_Aircrafts = {}
     CMOT_CA_Aircrafts.civ={}
@@ -109,7 +177,7 @@ local function CMOT_CA_AddAircrafts(_side_name)
     _table["type"]="Aircraft"
     _table["side"]=_side_name
     for position=1, max_position do
-        local num_aircraft = math.random(1,10)      -- <------------------Max Number of aircraft for each specific class
+        local num_aircraft = math.random(1,20)      -- <------------------Max Number of aircraft for each specific class
         for i=1, num_aircraft do
             local random_index = math.random(1,#CMOT_CA)
             local random_base = CMOT_CA[random_index]
@@ -210,7 +278,7 @@ end
 
 
 
-local function Test()
+local function Init()
     CMOT_Create_CA("CMOT CA")
     for k,airport in pairs(CMOT_CA) do
         for k, property in pairs(airport) do
@@ -237,5 +305,5 @@ end
 
 
 
---Test()
+Init()
 --CMOT_CA_Aircraft_Clear()
