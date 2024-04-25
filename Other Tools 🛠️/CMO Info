@@ -1,0 +1,24 @@
+Units that supplies ammunition:
+    Units must have the weapon in demand as one of their magazines under "Magazines"
+
+
+Command: Modern Operations Units that new users may not be aware of
+Facility:
+    Generic:
+        #3803 - Generic Threat Emitter
+        #3335 - EW Bn
+        #3166 - Marker (Bombing Target [Bullseye])
+        #3157 - UAV Launch Truck Class 1
+        #4104 - UAV Launch Truck Class 2
+        #2085 - Vehicle (Car x 1)
+        #622 - Vehicle (Car x 4)
+        #2552 - Vehicle (ELINT [Advanced])
+        #2553 - Vehicle (ELINT [Average])
+        #2554 - Vehicle (ELINT [Simple])
+        #3163 - Vehicle (Mobile Sector Control)
+        #3164 - Vehicle (UAV Ground Control)
+        #2086 - Vehicles (Ammo Truck x 4)
+        #624 - Vehicles (Truck x 4)
+    Notable:
+        #3743 - SSM Bty (Shahed-131 TEL x 3)
+        #4119 - VC-25A [Boeing 747-200B] Air Force one
