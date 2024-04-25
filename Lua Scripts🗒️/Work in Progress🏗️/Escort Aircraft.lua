@@ -1,4 +1,6 @@
 --[[
+    ONLY WORKS FOR SCENARIO EDITOR (For now)
+    
     Development Notes:
         Deployment Condition:
             -Escorters deploy only when Aircraft is ready or airborne
@@ -31,15 +33,88 @@
                 -Attack Aircrafts
                 -Any Aircrafts
                 -Guided Weapons
-        Instruction to use:
-            -Change the "Number of a/c to investigate unknown contacts" to "None"
-            -Add Prosecution Zone
-                -Prosecution Zone would indicate the max range that escorts may venture out
-            -Set Attack Distance (Ideal: 1.5x Prosecution Zone radius)
-            -Adjust Throttle speed
-            -Adjust flights size to your need
-            -Adjust number of aircrafts to engage hostiles
+        
+    Instruction to use:
+            -Select the Escortee (Aircraft that will be escorted)
+            -Run script
+            Note: A New Patrol Mission will be created by the name "Escort Mission for..."
+                -Assign Escorters (Aircraft that will escort the escortee) to the mission
+                -IMPORTANT: Change the "Number of a/c to investigate unknown contacts" to "None"
+                -Add Prosecution Zone
+                    -Prosecution Zone would basically serve as the area that the escorters will engage hostile contacts
+                -Set Attack Distance (Ideal: 0.8x Prosecution Zone 'radius')
+                -Adjust Throttle speed of the escortee (Escorted aircraft) to match the speed of your more speedy fighters/multirole aircrafts
+                -(Optional) Adjust flights size to your need
+                -(Optional) Adjust number of aircrafts to engage hostiles to your need
+                    Warning: Setting it to "All Flights" will cause all escorters to chase one Hostile, which leaves the escortee vulnerable to being attack from other contacts approaching from the opposite direction
 ]]--
+
+
+local _table = {name='A-50E/I Mainstay', guid='9V0YME-0HN357898CTA9'}    --<-----Replace table with Copied Unit Data here
+
+
+-----GENERAL UTILITY FUNCTIONS-----
+local function is_boolean(data)return type(data)=="boolean" end
+local function is_not_boolean(data)return type(data)~="boolean" end
+local function is_number(data)return type(data)=="number" end
+local function is_not_number(data)return type(data)~="number" end
+local function is_table(data)return type(data)=="table" end
+local function is_not_table(data)return type(data)~="table" end
+local function is_string(data)return type(data)=="string" end
+local function is_not_string(data)return type(data)~="string" end
+local function is_nil(data)return type(data)=="nil" end
+local function is_not_nil(data)return type(data)~="nil" end
+
+local function is_empty(data)
+    if is_nil(data) or (is_not_boolean(data) and is_not_number(data)) then
+        if is_nil(data) then return true end --for nil values
+        if is_table(data) then          --for tables
+            for k,v in pairs(data) do
+                return false
+            end
+            return true
+        elseif data =="" then           --for strings
+            return true
+        else
+            return false
+        end
+    else return false end
+end
+
+--<<Tables>>--
+local function table_has_element(_table,_element)
+    -- Error Handling
+    if is_not_table(_table) then
+        error("Invalid Parameter #1: Expected a table",2)
+    elseif is_empty(_element) then
+        error("Invalid Parameter #2: Expected a value",2)
+    end
+    if is_empty(_table) then
+        return false
+    end
+    for k,v in pairs (_table) do
+        if v==_element then
+            return true
+        end
+    end
+    return false
+end
+
+local function table_length(_table)
+    if is_nil(_table) then
+        return 0
+    end
+    if is_not_table(_table) then
+        error("Invalid Parameter: Expected a table", 2)
+    end
+    local count=0
+    for i in pairs(_table) do
+        count=count+1
+    end
+    return count
+end
+------------------------------
+
 
 
 
@@ -144,7 +219,6 @@ if is_nil(CMOT_Escort_Escorts) and is_not_table(CMOT_Escort_Escorts) then
     print(CMOT_Escort_Escorts)
 end
 
-local _table = {name='EMB-145I AEW #1', guid='9V0YME-0HN2T4E5VHG8U'}
 local escortee = ScenEdit_GetUnit(_table)
 local _side_name = ScenEdit_PlayerSide()
 
