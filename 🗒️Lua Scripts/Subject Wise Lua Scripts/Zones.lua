@@ -1,10 +1,13 @@
 --[[
+    Development Notes:
+        -Set units place in the prefix number as many as the number of RP in that zone
+            -Example: Prefix number of a Zone with 107 RPs starts with '#001', instead of '#1'
     Glossary:
         RP: Abbreviation for Reference Points
     
     Functions:
         <<Standard Zone>>
-            get_standardzone_rp_name(side, zone_name)   --Parameters: Side, ZoneName
+            get_standardzone_rp_name(side, zone_name)           --Parameters: Side, ZoneName
             rename_standardzone_rp_name(side, zone_name,prefix) --Parameters: Side, ZoneName, PrefixString
 ]]--
 
