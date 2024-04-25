@@ -8,7 +8,6 @@ Last Updated on: 2024/04/25</p>
   <p>This is a side project that I'm working on by sharing resources for "Command: Modern Operations"</p>
 
 <h4>Resources</h4>
-  <li>CMOT (Work In Progress🏗️)</li>
   <li>ImportExport
     <ul>
         <li>Templates\India</li>
@@ -21,7 +20,7 @@ Last Updated on: 2024/04/25</p>
   </li>
   <li>Lua Scripts🗒️
     <ul>
-        <li>Work in Progress🏗️</li>
+        <li>🟡🏗️Experimental</li>
         <ul>
             <li>Civilian traffic between Zone's RP</li>
             <li>Escort Aircraft</li>
@@ -34,7 +33,7 @@ Last Updated on: 2024/04/25</p>
             <li>Sides</li>
             <li>Zones</li>
         </ul>
-        <li>Deployed Scripts🟢</li>
+        <li>🟢Deployed Scripts</li>
         <ul>
             <li>Basic Blue VS Red</li>
             <li>Better Key Storage</li>
@@ -43,9 +42,8 @@ Last Updated on: 2024/04/25</p>
         </ul>
     </ul>
   </li>
-  <li>Other Tools 🛠️</li>
+  <li>🛠️Other Tools</li>
     <ul>
         <li>Command Modern Operations AHK</li>
     </ul>
-  <li>Sound Effects 🔊</li>
 </ul>
