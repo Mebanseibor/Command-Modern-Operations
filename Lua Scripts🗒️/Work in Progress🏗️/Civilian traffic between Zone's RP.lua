@@ -1,6 +1,22 @@
 --[[
-    Notes:
-        -Don't add aircrafts that can't fly during the night
+    Instructions:
+        Setup:
+            -Switch to Civilian Side
+            -Create a Standard Zone with zone name "CMOT CA"
+            -Use the DrawPolygon tool in the Area/Reference manager
+
+        Airport Deletion:
+            -DONT invividually delete any airport (Future fix will be implemented)
+            -Use global function "function CMOT_Delete_CA(data)" to delete a unit
+                -Parameter "data" can be a either a table with guid key or a guid string
+
+        Accidental Deletion of airport:
+            -Use global function "CMOT_CA_Aircraft_Clear()" to clear all aircrafts (Not' Aircrafts though)
+            -Run the code again
+        
+    
+    
+
     Glossary:
         CA:     Civilian Airports
         CMOT:   Command: Modern Operations ToolKit
@@ -9,6 +25,7 @@
     Functions:
         Global:
             CMOT_Delete_CA(data)                Parameters: String guid or a table (table that contains a key 'guid')
+            CMOT_CA_Aircraft_Clear()
         Local:
             CMOT_Create_CA(zone_name)           Parameters: String
             CMOT_Create_Facility_atRP(actual_rp)    Parameters: RP Wrapper
@@ -92,7 +109,7 @@ local function CMOT_CA_AddAircrafts(_side_name)
     _table["type"]="Aircraft"
     _table["side"]=_side_name
     for position=1, max_position do
-        local num_aircraft = math.random(1,10)
+        local num_aircraft = math.random(1,10)      -- <------------------Max Number of aircraft for each specific class
         for i=1, num_aircraft do
             local random_index = math.random(1,#CMOT_CA)
             local random_base = CMOT_CA[random_index]
@@ -204,7 +221,7 @@ local function Test()
     print(CMOT_CA)
 end
 
-local function Clear()
+function CMOT_CA_Aircraft_Clear()
     CMOT_CA={}
     CMOT_CA_Aircrafts_Units={}
     ScenEdit_DeleteMission(ScenEdit_PlayerSide(), CMOT_CA_Aircraft_Mission.name)
@@ -220,5 +237,5 @@ end
 
 
 
-Test()
---Clear()
+--Test()
+--CMOT_CA_Aircraft_Clear()

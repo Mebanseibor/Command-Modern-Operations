@@ -1,7 +1,8 @@
 <h2>Command: Modern Operations Resources</h2>
 
 
-<p><code>Note: This is my first dedicated repository, so pardon for any inconsistency or issues</code></p>
+<p><code>Note: This is my first dedicated repository, so pardon for any inconsistency or issues</code><br>
+Last Updated on: 2024/04/05</p>
 
 <h4>Purpose</h4>
   <p>This is a side project that I'm working on by sharing resources for "Command: Modern Operations"</p>

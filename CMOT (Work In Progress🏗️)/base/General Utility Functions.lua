@@ -145,3 +145,17 @@ function TOSTRING(data)
     end
 end
 ----------------------------
+
+
+
+
+
+-----<<Calculations>>-----
+function meter_to_feet(meter)
+    return meter*3.281
+end
+
+function feet_to_meter(feet)
+    return feet/3.281
+end
+--------------------------
