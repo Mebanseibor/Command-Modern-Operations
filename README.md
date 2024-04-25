@@ -2,20 +2,13 @@
 
 
 <p><code>Note: This is my first dedicated repository, so pardon for any inconsistency or issues</code><br>
-Last Updated on: 2024/04/05</p>
+Last Updated on: 2024/04/25</p>
 
 <h4>Purpose</h4>
   <p>This is a side project that I'm working on by sharing resources for "Command: Modern Operations"</p>
 
 <h4>Resources</h4>
-<ul>
-  <li>HTML 🌐
-    <ul>
-      <li>Basic Form</li>
-      <li>Basic Table</li>
-    </ul>
-  </li>
-
+  <li>CMOT (Work In Progress🏗️)</li>
   <li>ImportExport
     <ul>
         <li>Templates\India</li>
@@ -28,23 +21,25 @@ Last Updated on: 2024/04/05</p>
   </li>
   <li>Lua Scripts🗒️
     <ul>
-        <li>HTML Dialog Boxes🏗️</li>
+        <li>Work in Progress🏗️</li>
         <ul>
-            <li>Tools</li>
-        </ul>
-        <li>Partially Completed🏗️</li>
-        <ul>
-            <li>Analyse Contacts</li>
-            <li>Civilians and Others</li>
-            <li>Contact Emissions</li>
-            <li>Mega Script (All Functions)</li>
-            <li>Monitor Contacts Emissions</li>
+            <li>Civilian traffic between Zone's RP</li>
+            <li>Escort Aircraft</li>
         </ul>
         <li>Subject Wise Lua Scripts</li>
         <ul>
             <li>Contacts</li>
+            <li>Events</li>
+            <li>Reference Points</li>
             <li>Sides</li>
             <li>Zones</li>
+        </ul>
+        <li>Deployed Scripts🟢</li>
+        <ul>
+            <li>Basic Blue VS Red</li>
+            <li>Better Key Storage</li>
+            <li>Disable Automatic Detection for PlayerSide</li>
+            <li>Max Fuel for all Aircraft for PlayerSide</li>
         </ul>
     </ul>
   </li>
