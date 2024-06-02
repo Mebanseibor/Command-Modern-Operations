@@ -18,13 +18,8 @@ Last Updated on: 2024/04/25</p>
         </ul>
     </ul>
   </li>
-  <li>Lua Scripts🗒️
+  <li>🗒️Lua Scripts
     <ul>
-        <li>🟡🏗️Experimental</li>
-        <ul>
-            <li>Civilian traffic between Zone's RP</li>
-            <li>Escort Aircraft</li>
-        </ul>
         <li>Subject Wise Lua Scripts</li>
         <ul>
             <li>Contacts</li>
@@ -33,10 +28,15 @@ Last Updated on: 2024/04/25</p>
             <li>Sides</li>
             <li>Zones</li>
         </ul>
+        <li>🟡🏗️Experimental</li>
+        <ul>
+            <li>Civilian traffic between Zone's RP</li>
+            <li>Escort Aircraft</li>
+        </ul>
         <li>🟢Deployed Scripts</li>
         <ul>
             <li>Basic Blue VS Red</li>
-            <li>Better Key Storage</li>
+            <li>Better KeyStore</li>
             <li>Disable Automatic Detection for PlayerSide</li>
             <li>Max Fuel for all Aircraft for PlayerSide</li>
         </ul>

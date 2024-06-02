@@ -1,12 +1,13 @@
 -- Functions
-    -- KeyStorage_StoreTable(name, table, forCampaign)
-    -- KeyStorage_GetTable(name)
+    -- KeyStore_SetTable(name, table, forCampaign)
+    -- KeyStore_GetTable(name)
 
 -- Instructions:
 --     Setup:
 --         -Setup an Event with trigger "ScenarioIsLoaded"
 --         -Add a LuaScript Action with this script to load the script everytime the Scenario is loaded
---         -It is recommended to place this Action at the top of the actions for the Event to prevent any "function not found" error
+--         -It is recommended to place this Action at the top of the actions (if any) for the Event to prevent any "function not found" error
+--          -Either Save and Load the scenario to bootup the Script, or Run this code once in the console to enable the functions
 
 -- Purpose:
 --     Since the Game function "ScenEdit_SetKeyValue()" can only store non-empty strings but not tables, this script allows tables to also be stored
@@ -38,17 +39,22 @@ local Tag_ValueTable = Char_OpenSymbol.."ValueTable"..Char_CloseSymbol
 
 
 --<<STORING>>--
-function KeyStorage_StoreTable(name, _table, forCampaign)
+function KeyStore_SetTable(name, _table, forCampaign)
     --Error Handling
     if type(name)~="string" or name=="" then
-        ScenEdit_MsgBox("Error\r\nFunction \'KeyStorage_StoreTable(name, _table, forCampaign)\'\r\nParameter #1: Expected a non-empty string", 6)
+        ScenEdit_MsgBox("Error\r\nFunction \'KeyStore_SetTable(name, _table, forCampaign)\'\r\nParameter #1: Expected a non-empty string", 6)
         error("Invalid Parameter #1: Expected a non-empty string", 2)
     elseif type(_table)~="table" then
-        ScenEdit_MsgBox("Error\r\nFunction \'KeyStorage_StoreTable(name, _table, forCampaign)\'\r\nParameter #2: Expected a table", 6)
+        ScenEdit_MsgBox("Error\r\nFunction \'KeyStore_SetTable(name, _table, forCampaign)\'\r\nParameter #2: Expected a table", 6)
         error("Invalid Parameter #2: Expected a table", 2)
-    elseif type(forCampaign)~="boolean" then
-        ScenEdit_MsgBox("Error\r\nFunction \'KeyStorage_StoreTable(name, _table, forCampaign)\'\r\nParameter #3: Expected a boolean", 6)
-        error("Invalid Parameter #3: Expected a boolean", 2)
+    end
+    if forCampaign~=nil then
+        if type(forCampaign)~="boolean" then
+            ScenEdit_MsgBox("Error\r\nFunction \'KeyStore_SetTable(name, _table, forCampaign)\'\r\nParameter #3: Expected a boolean", 6)
+            error("Invalid Parameter #3: Expected a boolean", 2)
+        end
+    else
+        forCampaign=false
     end
     
     local function KeyStore_BuildString(_table)
@@ -97,22 +103,23 @@ end
 
 
 --<<Retrieving>>--
-function KeyStorage_GetTable(name)
+function KeyStore_GetTable(name)
     --Error Handling
     if type(name)~="string" or name=="" then
-        ScenEdit_MsgBox("Error\r\nFunction \'KeyStorage_GetTable(name)\'\r\nParameter #1 should be a non-empty string", 6)
+        ScenEdit_MsgBox("Error\r\nFunction \'KeyStore_GetTable(name)\'\r\nParameter #1 should be a non-empty string", 6)
         error("Invalid Parameter #1: Expected a non-empty string", 2)
     end
 
 
-    local KeyStore_ActualKey = ScenEdit_GetKeyValue (name)
+    local KeyStore_ActualKey = ScenEdit_GetKeyValue(name)
+    
     --Error Handling for Empty/invalid key
-    if KeyStore_ActualKey=="" then return "" end
+    if KeyStore_ActualKey=="" then return {} end
 
     --print(KeyStore_Key)
     KeyStore_ActualKey = KeyStore_ActualKey:gsub("\n","\r\n")
 
-    function LoopThroughTableTag(Str)
+    function LoopThroughTableTag(Str, KeyStore_Value_PositionPointer)
 
         local KeyStore_Key = Str
         
@@ -150,7 +157,7 @@ function KeyStorage_GetTable(name)
         local _table = {}
         local looplimit=string.len(KeyStore_Key)    --For Fault Handling
 
-        while Tag~="TABLE_END" do
+        while Tag~="TABLE_END" or Tag~="KeyStoreEnd" do
             if KeyStore_Value_PositionPointer==string.len(KeyStore_Key) then break end
 
             local char = string.sub(KeyStore_Key, KeyStore_Value_PositionPointer, KeyStore_Value_PositionPointer)
@@ -159,8 +166,9 @@ function KeyStorage_GetTable(name)
 
             if(UnicodeInt_Char==UnicodeInt_OpenSymbol) then
                 local Position_CloseSymbol = GetPos_NextCloseSymbol(KeyStore_Value_PositionPointer + 1)
-                
+
                 local Tag = string.sub(KeyStore_Key, KeyStore_Value_PositionPointer+1, Position_CloseSymbol-1)
+
                 --Hop the pointer over to the closing symbol of the Opening Tag
                 KeyStore_Value_PositionPointer = Position_CloseSymbol
 
@@ -200,9 +208,16 @@ function KeyStorage_GetTable(name)
                     local startPos, endPos = Str:find("«TABLE_START»", KeyStore_Value_PositionPointer)
                     KeyStore_Value_PositionPointer = startPos
                     
-                    _table[Key] = LoopThroughTableTag(string.sub(Str, KeyStore_Value_PositionPointer, string.len(Str)))
+
+                    local TempstartPos, endPos = Str:find("«TABLE_START»\r\n«TABLE_END»", KeyStore_Value_PositionPointer)
+                    local StringStartingFromUpcomingTable = string.sub(Str, KeyStore_Value_PositionPointer, string.len(Str))
                     
-                    --Move pointer when just after the first encounter with tag "TABLE_END"
+                    if TempstartPos == KeyStore_Value_PositionPointer then
+                        _table[Key] = {}
+                    else
+                        _table[Key] = LoopThroughTableTag(StringStartingFromUpcomingTable, KeyStore_Value_PositionPointer)
+                    end
+                    --Move pointer just after the first encounter with tag "TABLE_END"
                     local startPos, endPos = Str:find("«TABLE_END»", KeyStore_Value_PositionPointer)
                     Position_ClosingTag = startPos
                     KeyStore_Value_PositionPointer = endPos-1
@@ -213,7 +228,7 @@ function KeyStorage_GetTable(name)
                 --When work on the Tag is done, move the pointer to the CloseSymbol of the Ending Tag
                 --Finding CloseSymbol of Closing Tag
                 local Position_CloseSymbol = GetPos_NextCloseSymbol(Position_ClosingTag + 1)
-                --Hop the pointer over just after the Closing Key Tag
+                --Hop the pointer just after the Closing Tag
                 KeyStore_Value_PositionPointer = Position_CloseSymbol
             end
             --Next Character
@@ -225,11 +240,11 @@ function KeyStorage_GetTable(name)
                 print("Encounted Possible Infinite Loop, Breaking!!!")
                 --ScenEdit_MsgBox("Encounted Possible Infinite Loop, Breaking!!!", 6)
                 --error("Infinite Loop: Encounted Possible Infinite Loop, Breaking!!!", 1)
-                break
+                return _table
             end
         end
         return _table
     end
-    local AssembledTable = LoopThroughTableTag(KeyStore_ActualKey)
+    local AssembledTable = LoopThroughTableTag(KeyStore_ActualKey, 1)
     return AssembledTable
 end
