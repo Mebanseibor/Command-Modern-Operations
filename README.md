@@ -1,49 +1,37 @@
-<h2>Command: Modern Operations Resources</h2>
+# Command: Modern Operations Resources
+`Last Updated on: 2024/07/01 YYYY/MM/DD`
 
+## Purpose
+  This is a side project that I'm working on by sharing resources for "Command: Modern Operations"
 
-<p><code>Note: This is my first dedicated repository, so pardon for any inconsistency or issues</code><br>
-Last Updated on: 2024/04/25</p>
-
-<h4>Purpose</h4>
-  <p>This is a side project that I'm working on by sharing resources for "Command: Modern Operations"</p>
-
-<h4>Resources</h4>
-  <li>ImportExport
-    <ul>
-        <li>Templates\India</li>
-        <ul>
-            <li>Jorhat Airport (JHR)</li>
-            <li>Lokpriya Gopinath Bordoloi International Airport (GAU)</li>
-            <li>Shillong Airport (SHL)</li>
-        </ul>
-    </ul>
-  </li>
-  <li>🗒️Lua Scripts
-    <ul>
-        <li>Subject Wise Lua Scripts</li>
-        <ul>
-            <li>Contacts</li>
-            <li>Events</li>
-            <li>Reference Points</li>
-            <li>Sides</li>
-            <li>Zones</li>
-        </ul>
-        <li>🟡🏗️Experimental</li>
-        <ul>
-            <li>Civilian traffic between Zone's RP</li>
-            <li>Escort Aircraft</li>
-        </ul>
-        <li>🟢Deployed Scripts</li>
-        <ul>
-            <li>Basic Blue VS Red</li>
-            <li>Better KeyStore</li>
-            <li>Disable Automatic Detection for PlayerSide</li>
-            <li>Max Fuel for all Aircraft for PlayerSide</li>
-        </ul>
-    </ul>
-  </li>
-  <li>🛠️Other Tools</li>
-    <ul>
-        <li>Command Modern Operations AHK</li>
-    </ul>
-</ul>
+## Resources
+  - ### ImportExport
+    - #### [Templates\India][Directory ImportExport_Templates_India]
+      - Jorhat Airport (JHR)
+      - Lokpriya Gopinath Bordoloi International Airport (GAU)
+      - Shillong Airport (SHL)
+  - ### 🗒️Lua Scripts
+    - #### [Subject Wise Lua Scripts][Directory SubjectWiseLuaScripts]
+      - Contacts
+      - Events
+      - Reference Points
+      - Sides
+      - Zones
+    - #### [🟡🏗️Experimental][Directory Experimental]
+      - Civilian traffic between Zone's RP
+      - Escort Aircraft
+    - #### [🟢Deployed Scripts][Directory DeployedScripts]
+      - Basic Blue VS Red
+      - Better KeyStore
+      - Disable Automatic Detection for PlayerSide
+      - Max Fuel for all Aircraft for PlayerSide
+  - ### 🛠️Other Tools
+    - #### [Autohotkeys for CMO][Directory OtherTools_Autohotkeys]:
+      - Command Modern Operations AHK
+<!-- README Links -->
+<!-- Directories: -->
+  [Directory ImportExport_Templates_India]: ./ImportExport/Templates/India/
+  [Directory Experimental]: ./🗒️Lua%20Scripts/🟡🏗️Experimental/
+  [Directory DeployedScripts]: ./🗒️Lua%20Scripts/🟢Deployed%20Scripts/
+  [Directory SubjectWiseLuaScripts]: ./🗒️Lua%20Scripts/Subject%20Wise%20Lua%20Scripts/
+  [Directory OtherTools_Autohotkeys]: ./🛠️Other%20Tools/Command%20Modern%20Operations%20AHK.ahk
