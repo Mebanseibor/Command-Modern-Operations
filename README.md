@@ -41,7 +41,7 @@
 
 ## <p id='content-futureadditions'>Future Additions🔮</p>
 - ### Scenarios
-  - Neckbreacker
+  - Neckbreaker
     - A scenario between India and China over the disputed region in the NE-Region of India, also including India's [chicken neck][weblink-wiki-siliguricorridor]
 
 - ### Scripts
@@ -72,8 +72,8 @@
       - Dynamic Formation
       - Units Seperation
       - Group formations
-      - ##### Future Enhancements:
-        - Biologics flees away from explosions and sounds
+    - ##### Future Enhancements:
+      - Biologics flees away from explosions and sounds
   
   - #### Dynamic Weather
     - Weather Reports on escalated Weather

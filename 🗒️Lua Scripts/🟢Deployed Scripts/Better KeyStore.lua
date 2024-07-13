@@ -4,10 +4,10 @@
 
 -- Instructions:
 --     Setup:
---         -Setup an Event with trigger "ScenarioIsLoaded"
---         -Add a LuaScript Action with this script to load the script everytime the Scenario is loaded
---         -It is recommended to place this Action at the top of the actions (if any) for the Event to prevent any "function not found" error
---          -Either Save and Load the scenario to bootup the Script, or Run this code once in the console to enable the functions
+--         - Setup an Event with trigger "ScenarioIsLoaded"
+--         - Add a LuaScript Action with this script to load the script everytime the Scenario is loaded
+--         - It is recommended to place this Action at the top of the actions (if any) for the Event to prevent any "function not found" error
+--         - Either Save and Load the scenario to bootup the Script, or Run this code once in the console to enable the functions
 
 -- Purpose:
 --     Since the Game function "ScenEdit_SetKeyValue()" can only store non-empty strings but not tables, this script allows tables to also be stored
