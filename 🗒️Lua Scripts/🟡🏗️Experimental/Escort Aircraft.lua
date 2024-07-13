@@ -19,6 +19,14 @@
             -How to take guid of units in base?
             -Add Event that alerts of any notable contacts within procecution area
             -Ocassionally update the PatrolArea Waypoint of the escorters to point near the escortee
+                local _referencepoint = objRP
+                local _unit = objUnit
+                
+                local _wp = _unit.course[1].WayPoint
+                _wp.latitude = rp.latitude
+                _wp.longitude = rp.longitude
+                print(_wp)
+                ScenEdit_SetUnit({guid=_unit.guid, course=_course})
             -Out of Comms unit still retains its RP point, which tracks the actual unit
             -Add Button for easier integration
             -Add ability to assign RP to the unit by selecting the unit, rather than supplying its Guid
@@ -120,55 +128,52 @@ end
 
 local function CMOT_Escort_Trailing_RP(escortee)
     local _table = {}
-    _table ["bearing"] = (escortee.heading+180) % 360
-    _table ["bearingtype"] = "Rotating"
-    _table ["color"] = "cyan"
-    _table ["distance"] = 0.2
-    _table ["name"] = escortee.name.." Escort RP"
-    _table ["relativeto"] = escortee.guid
-    _table ["side"] = ScenEdit_PlayerSide()
+    _table.bearing = (escortee.heading+180) % 360
+    _table.bearingtype = "Rotating"
+    _table.color = "cyan"
+    _table.distance = 0.2
+    _table.name = escortee.name.." Escort RP"
+    _table.relativeto = escortee.guid
+    _table.side = ScenEdit_PlayerSide()
     
     local rp = ScenEdit_AddReferencePoint(_table)
 
     local _info = {}
-    _info["name"] = escortee.name
-    _info["guid"] = escortee.guid
-    _info["rp"] = rp.guid
-    _info["mission"]=""
+    _info.name = escortee.name
+    _info.guid = escortee.guid
+    _info.rp = rp.guid
+    _info.mission = ""
     
     table.insert(CMOT_Escort_Escorts, _info)
-
     return rp
 end
 
 local function CMOT_Escort_Patrol_Mission(escortee, rp)
     local _table = {}
-    _table["type"] = "AAW"
-    _table["zone"] = {rp.guid}
-    CMOT_Escort_Escorts[#CMOT_Escort_Escorts]["mission"] = (ScenEdit_AddMission(ScenEdit_PlayerSide(), "Escort Mission for "..escortee.name, "Patrol", _table)).guid
+    _table.type = "AAW"
+    _table.zone = {rp.guid}
+    CMOT_Escort_Escorts[#CMOT_Escort_Escorts].mission = (ScenEdit_AddMission(ScenEdit_PlayerSide(), "Escort Mission for "..escortee.name, "Patrol", _table)).guid
     
     local _table={}
-    _table["OneThirdRule"] = false
-    _table["UseFlightSize"] = false
-    _table["CheckOPA"] = true   -- can investigate outside zones
-    _table["CheckWWR"] = false  -- can investigate within weapon range
+    _table.OneThirdRule = false
+    _table.UseFlightSize = false
+    _table.CheckOPA = true   -- can investigate outside zones
+    _table.CheckWWR = false  -- can investigate within weapon range
     --_table["FlightsToInvestigate"] = "None"
     --_table[""] = --"Try to keep 2 per class on station"--
     --_table["ProsecutionZone"] = {}    --table of reference points for Prosecution Zone
     ScenEdit_SetMission(ScenEdit_PlayerSide(), CMOT_Escort_Escorts[#CMOT_Escort_Escorts].mission,_table)
 
     local _table={}
-    _table["fuel_state_rtb"] = 3   -- 3 = YesLeaveGroup
-    _table["weapon_state_planned"] = 2002
-    --[[
-        2002 = Winchester_ToO (Same as above, but engage nearby bogies with guns after we're out of missiles.
-        Applies to air-to-air missile loadouts only.
-        For guns-only air-to-air loadouts and all air-to-ground loadouts the behaviour is the same as above.
-        PREFERRED OPTION!
-    ]]--
-    _table["weapon_state_rtb"] = 3  -- 3 = YesLeaveGroup
-    _table["engage_opportunity_targets"] = false    -- Don't engage non-mission contacts
-    _table["engaging_ambiguous_targets"] = 1        -- optimistic
+    _table.fuel_state_rtb = 3   -- 3 = YesLeaveGroup
+    _table.weapon_state_planned = 2002
+        -- 2002 = Winchester_ToO (Same as above, but engage nearby bogies with guns after we're out of missiles.
+        -- Applies to air-to-air missile loadouts only.
+        -- For guns-only air-to-air loadouts and all air-to-ground loadouts the behaviour is the same as above.
+        -- PREFERRED OPTION!
+    _table.weapon_state_rtb = 3  -- 3 = YesLeaveGroup
+    _table.engage_opportunity_targets = false    -- Don't engage non-mission contacts
+    _table.engaging_ambiguous_targets = 1        -- optimistic
     
     --Optional:
     --<Doctrine>:addTargetPriorityEntry(type, subtype, isfixedfacilitysubtype, dbid, index)
@@ -223,6 +228,6 @@ local escortee = ScenEdit_GetUnit(_table)
 local _side_name = ScenEdit_PlayerSide()
 
 print(CMOT_Escort_Escorts)
-CMOT_Escort_Init(escortee, 50)
+CMOT_Escort_Init(escortee, 50)  --50 indicates radius of ProsecutionZone (Feature Not Implemented Yet)
 print(CMOT_Escort_Escorts)
 --CMOT_Escort_Clear()

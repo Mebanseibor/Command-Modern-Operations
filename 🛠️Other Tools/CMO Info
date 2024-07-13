@@ -1,3 +1,10 @@
+AverageDaysPerYearSince1970 = ScenEdit_CurrentTime()/60/60/24/367.59099
+
+local pulseSecond = 10000000
+
+local secondsFrom0001To1970 = 62135596800
+local avgDaysPerYearFrom0001To1970 = 365.056852791878
+
 Units that supplies ammunition:
     Units must have the weapon in demand as one of their magazines under "Magazines"
 
