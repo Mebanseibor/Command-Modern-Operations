@@ -1,0 +1,124 @@
+--Future Developments--
+Add feature of POW when survivors are in enemy territory for a set amount of time:
+    -Use "UnitRemainInArea"
+    -Enemy Units converges onto the downed plane/survivor after a set amount of time
+
+
+
+
+
+--New Fixes--
+Properly rename all Event, Triggers, Scripts and Conditions
+
+Add Notification when a Survivor Marker is found
+
+Add Feature:
+    -Ability to disable specific notifications
+    -Ability to filter out selected Wreckages
+        -Accounts for no Contacts selected
+        -Only filter out wreckage
+
+Add a Tip on how to detect survivors:
+    -Use Infrared camera at very low range:
+        -Equip Helicopters with infrared Helicopter
+    -Use a Patrol Mussion to randomly scan the area of possible survivors
+    -The Found Survivor will automatically switch to your side
+        -This enables them to be put into Helicopters (as cargo) and brough back to any "Land-able" base (Included lone helipads)
+    -Gaming Tips:
+        -Hold CTRL and hover over units to quickly get info about units/contacts
+
+    
+    
+
+SAR Helipoter should have a IR sensors to detect the survivors of type personnels
+    Example:
+        SAR Helicopter:
+        IR Sensors:
+            -#5228 - Generic Infrared Reconnaissance Camera         05nm Max Range
+            -#5770 - Generic IR Camera                              15nm Max Range
+
+Disable "SAR_enable" for Survivors
+
+Create a global table that will hold the various "dbid or specific class" that are meant to  depict survivors
+    Name: CMOT_Aircraft_SurvivorTypes
+
+Create a repeatable Event "CMOT_SAR_Aircraft SARSurvivorIsFound"
+    Trigger:
+        [Run Existing Script: UnitIsDetected SARSurvivor_MobilePersonnel]
+        Note:
+            More categories of this type of trigger for various types of units meant to depict survivors (Survivor types can be found from CMOT_Aircraft_SurvivorTypes)
+            -Make the "Hard-to-Identify" units easier to identify by just needing to know the domain/type of contact
+    Condition:
+        Type: LuaScript
+        Name: "LuaScript IsContactASurvivor"
+        Script Content: [From "IsContactASurvivor.lua"]
+
+    Action:
+        Type: LuaScript 
+        Name: "LuaScript ConvertDetectedSurvivors"
+        Scrip Content: [From: "ConvertDetectedSurvivors.lua"]
+
+
+
+Issue:
+--------------------------------
+Create a repeatable Event "CMOT_SAR_Aircraft SARSurvivorIsBeingPickedUp"
+    Trigger:
+        Type: UnitBaseStatus
+        Name: "UnitBaseStatus Player'sAircraftTransferringCargo"
+        Properties:
+            TargetSide: CMOT_SAR_PlayerSide
+            TargetType: Aircraft
+            TargetConditionTo: TransferringCargo
+    Condition:
+        Type: LuaScript
+        Name: "LuaScript IsPickedUpUnitASurvivor"
+        Script Content: [From: "IsPickedUpUnitASurvivor.lua"]
+    Action:
+        Type: LuaScript
+        Name: "LuaScript SurvivorPickedUp"
+        Script Content: [From: SurvivorPickedUp]
+----------------------------
+
+Solutions to above Issue:
+----------------
+--If Ships can directly take in units like rafts, then fixes for that should be added here
+Create a repeatable Event "CMOT_SAR_Aircraft SARSurvivorReachedBaseAsCargo"
+    Trigger:
+        Type: UnitBaseStatus
+        Name: "UnitBaseStatus PlayerAircraftHasLanded"
+        Properties:
+            TargetSide: CMOT_SAR_PlayerSide
+            TargetType: "Aircraft"
+            TargetConditionTo: "Landing_PostTouchDown"
+            Player's Aircraft "Landed"  --Make sure it suitable for Helicopter too, annd optionally boats too
+    Action:
+        Type: "LuaScript"
+        Name: "LuaScript SARSurvivorReachedBaseAsCargo"
+        Script Content: [From: "SARSurvivorReachedBaseAsCargo"]
+----------------
+
+
+
+Scenario Start:
+Create a reapeatable Event "CMOT ScenarioLoaded"
+    Trigger:
+        Type: ScenarioIsLoaded
+        Name: "CMOT ScenarioLoaded"
+    Actions:
+        Action01:
+            Type: LuaScrip
+            Name: "CMOT BetterKeyStore"
+            Script Content: [From: "Better KeyStore.lua"]
+        Action02:
+            Type: LuaScrip
+            Name: "CMOT_SAR_Aircraft GetKeys"
+            Script Content: [From: "CMOT_SAR_Aircraft GetKeys.lua"]
+    
+
+-Create a Repeatable Event: (Meant for junk cleanup)
+        -Trigger:   
+            -Trigger Type: "RegularTimer"
+                -Timer: (Select any Interval, recommended is 5min)
+        -Acion:
+            -Place Code "SAR Aircraft JunkCleanup.lua" as a Lua Action
