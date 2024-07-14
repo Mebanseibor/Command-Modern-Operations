@@ -102,6 +102,18 @@
   - #### Generate RandomTime Trigger
     - Ability for events/special actions to generate a randomtime trigger with inputted parameters
   
+  - #### Logistics for Fuel and Minitions
+    - Ability for bases to run out of fuel and muunition supplies
+    - Aircrafts consumes aviation fuel
+    - ##### Factors:
+      - Existance of a Supply Station:
+        - Ports
+        - Train stations
+        - Storage facilities
+        - Fuel storage tanks
+      - Infrastructure for supplying from the supply station to the base
+      - Base should bave a storage capability for the resource
+  
   - #### Munition Wave Attacks
     - Allocate units to attack other units in a wave with the use of ammunition
 
