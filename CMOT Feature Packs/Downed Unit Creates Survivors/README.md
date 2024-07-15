@@ -29,8 +29,7 @@ The survivors are rescued if they are brought back to base
         - Unit proficiency
         - Whether the unit was destroyed or out-of-fuel
         - An arbitrary base proficiency, set within the script
-- Downed pilot deploys a `smoke marker` to indicate survivors
-    - The marker will disappear after a period of time starting from when its survivor is picked up
+- Downed pilot deploys a `smoke marker` to indicate existance of survivors
 - Survivors are counted as rescued only when their rescuer (an aircraft unit) has landed on an airfield/helipad
 - Downed aircraft due to `Out-of-fuel` status has a slight chance of not producing any survivors
 - Aerial Drones won't create any survivors
@@ -108,6 +107,7 @@ The survivors are rescued if they are brought back to base
 - ### Ability to jump the camera to where the survivor was found
 - ### Ability to disable specific notifications
 - ### Ability to permanently drop selected wreckages
+- ### Disappearance of smoke markers if its survivor is picked up
 - ### Clean Removal of the package
 
 
