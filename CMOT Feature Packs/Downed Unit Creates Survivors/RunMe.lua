@@ -1,21 +1,9 @@
 --[[
     Development Notes:
-        -Add JunkCleanUp
-        -Components under Shared Components that have to take values from the new updated values (When the script is run again) are not implemented yet
-            -Example: When SARSide is changed
-        -Personal Notes:
-            -For every key that is made, add a get and a clear function for it
-            -All Package Specific Components under Shared Triggers must be have a record on a common KeyTable ""
-                -It should consist of the Event's GUID and 
-        Future Enhancements:
-            -Add Ability to Remove this Package without removing the shared components used by other Packages if any
 ]]--
 
---Scripts Last Updated On:     2024/04/29      (YYYY/MM/DD)
+-- Scripts Last Updated On:     2024/07/15      (YYYY/MM/DD)
 
-
--- Notes:
---     When "LuaScript_CMOTBetterKeyStore" is updated, make sure to also update under it under the function "Run_BetterKeyStore()"
 
 
 --<<LuaScripts>>--
@@ -277,25 +265,20 @@ local LuaScript_CMOTBetterKeyStore = [[
 -------------------------------------------------------------------
 local LuaScript_CMOT_SAR_Aircraft_GetKeys = [[
 --LuaScriptStart        
-    --Functions
-    -- KeyStore_SetTable(name, table, forCampaign)
-    -- KeyStore_GetTable(name)
-
-    --Special Considerations
-    --For ScenarioLoaded
-        EventGuid_CMOT_ScenarioLoaded  = ScenEdit_GetKeyValue("EventGuid_CMOT_ScenarioLoaded")
-        TriggerGuid_CMOT_ScenarioLoaded  = ScenEdit_GetKeyValue("TriggerGuid_CMOT_ScenarioLoaded")
-        -- CMOT Utilities Scripts:
-            ActionGuid_CMOT_BetterKeyStore = ScenEdit_GetKeyValue("ActionGuid_CMOT_BetterKeyStore")
-        -- For importing this script
-            --ActionGuid_CMOT_SAR_Aircraft_GetKeys = ScenEdit_GetKeyValue("ActionGuid_CMOT_SAR_Aircraft_GetKeys")   <--Unbinding this Action from its Event is not implemented yet
+    -- For Common Components
+        --For ScenarioLoaded
+            TriggerGuid_CMOT_ScenarioLoaded  = ScenEdit_GetKeyValue("TriggerGuid_CMOT_ScenarioLoaded")
+            -- CMOT Utilities Scripts:
+                ActionGuid_CMOT_BetterKeyStore = ScenEdit_GetKeyValue("ActionGuid_CMOT_BetterKeyStore")
+            -- Guid of the Action that will run this script
+                ActionGuid_CMOT_SAR_Aircraft_GetKeys = ScenEdit_GetKeyValue("ActionGuid_CMOT_SAR_Aircraft_GetKeys")
 
 
     --table
     PackageComponents_CMOT_SAR = KeyStore_GetTable("PackageComponents_CMOT_SAR")
+    DependantPackageComponents_CMOT_SAR = KeyStore_GetTable("DependantPackageComponents_CMOT_SAR")
     CMOT_SAR_Aircraft_SurvivorList = KeyStore_GetTable("CMOT_SAR_Aircraft_SurvivorList")
     CMOT_SAR_AircraftWreckageList = KeyStore_GetTable("CMOT_SAR_AircraftWreckageList")
-    --CMOT_SAR_EventsGuid = 
 
 
     --string
@@ -548,6 +531,47 @@ local LuaScript_SARSurvivorReachedBaseAsCargo=[[
 
 
 
+
+
+
+
+
+
+
+
+
+--<<Text>>--
+----------------------------------------------------------------------------------------
+local Text_Recommendation = [[
+Recommended Configuration for SAR Side:
+
+- Set SAR side's Awareness Level to "Blind", to reduce unnecessary sensor calculations
+
+- Set SAR side as Nuetral to all sides to prevent aggression
+
+- Set SAR side's playability as "Computer-only"
+]]
+
+local Text_AircraftWreckageLimit = [[
+Enter the maximum number of Aircraft Wreckage that can be present at a time
+
+Purpose: This reduces Units in a scenario
+]]
+
+local Text_SARSide = [[
+Select a Non-Combative, Nuetral Side for SAR
+]]
+
+local Text_PlayerSide = [[
+Select Player's Side
+]]
+
+local Text_ReloadScenario = [[
+For the scripts to take effect:
+- Kindly save and reload the scenario
+]]
+----------------------------------------------------------------------------------------
+--<<//Text>>--
 
 
 
@@ -821,7 +845,7 @@ local function CMOT_SAR_Aircraft_Init()
         PackageComponents_CMOT_SAR = {Events={}, Triggers={}, Conditions={}, Actions={}, SpecialActions={}}
         KeyStore_SetTable("PackageComponents_CMOT_SAR", PackageComponents_CMOT_SAR)
     --Create a table of tables that kepp tracks of shared Package components
-        SharedPackageComponents_CMOT_SAR = {}   --Elements should hold table values {<Parent event Guid>, <Component Guid>}   <----- Yet to be implemented
+        DependantPackageComponents_CMOT_SAR = {}
 
     --<<EVENTS>>--
         local function Event_CMOT_ScenarioLoaded()
@@ -1055,10 +1079,21 @@ local function CMOT_SAR_Aircraft_Init()
 
 --<<Pakage Related Functions>>--
 ----------------------------------------------------------------------------------------
-local function AddTo_PackageComponents_CMOT_SAR(Component, Guid)
-    table.insert(Component, Guid)
+local function AddTo_PackageComponents_CMOT_SAR(componentType, componentGuid)
+    table.insert(componentType, componentGuid)
+    
     KeyStore_SetTable("PackageComponents_CMOT_SAR", PackageComponents_CMOT_SAR)
-    PackageComponents_CMOT_SAR = KeyStore_GetTable("PackageComponents_CMOT_SAR")
+end
+
+local function AddTo_DependantPackageComponents_CMOT_SAR(_guidDependantComponent, _componentTypeDependentComponent, _keystorekey, _guidCommonComponent)
+    local _table = {}
+    _table.guidDependantComponent = _guidDependantComponent
+    _table.componentTypeDependentComponent = _componentTypeDependentComponent
+    _table.guidCommonComponent = _guidCommonComponent
+    _table.keystorekey = _keystorekey
+    table.insert(DependantPackageComponents_CMOT_SAR, _table)
+
+    KeyStore_SetTable("DependantPackageComponents_CMOT_SAR", DependantPackageComponents_CMOT_SAR)
 end
 ----------------------------------------------------------------------------------------
 --<<//Pakage Related Functions>>--
@@ -1099,8 +1134,8 @@ end
             -- Add Script to import keys related to CMOT_SAR_Aircraft
                 local _action = ScenEdit_SetAction(Action_LuaScript_CMOT_SAR_Aircraft_GetKeys())
                 AddEventAction(_event, _action)
-                --AddTo_PackageComponents_CMOT_SAR(PackageComponents_CMOT_SAR.Actions, _action.guid)    <--Cannot add due to inability to account for Out-Of-Package Events like Time based Events
-                --KeyStore_SetTable("ActionGuid_CMOT_SAR_Aircraft_GetKeys", _action.guid)
+                ScenEdit_SetKeyValue("ActionGuid_CMOT_SAR_Aircraft_GetKeys", _action.guid)
+                AddTo_DependantPackageComponents_CMOT_SAR(_action.guid, "action", "ActionGuid_CMOT_SAR_Aircraft_GetKeys", _event.guid)
 
         --Events for Periodic Events
             --Create Event "CMOT_PeriodicEvent_5Min"
@@ -1111,7 +1146,7 @@ end
 
 
 
-    --<<UNSHARED COMPONENTS>>--
+    --<<INDEPENDENT COMPONENTS>>--
         -- Create Event "CMOT_SAR_Aircraft_UnitCreationUponDestruction"
                 local _event = ScenEdit_SetEvent("CMOT_SAR_Aircraft UnitCreationUponDestruction", Event_CMOT_SAR_Aircraft_UnitCreationUponDestruction())
                 AddTo_PackageComponents_CMOT_SAR(PackageComponents_CMOT_SAR.Events, _event.guid)
@@ -1156,7 +1191,7 @@ end
                 local _action = ScenEdit_SetAction(Action_LuaScript_SARSurvivorReachedBaseAsCargo())
                 AddEventAction(_event, _action)
                 AddTo_PackageComponents_CMOT_SAR(PackageComponents_CMOT_SAR.Actions, _action.guid)
-    --<<//UNSHARED COMPONENTS>>--
+    --<<//INDEPENDENT COMPONENTS>>--
 end
 
 
@@ -1171,10 +1206,37 @@ end
     local function CMOT_SAR_InitialInput()
         --local functions
             --Clear keys from keystore
-                local function ClearAllPackageKeyStore()
-                    --Functions to Properly clear some keys
+                local function ClearPackage_CMOT_SAR()
+                    -- Unbind dependant components from common components
+                        local function Clear_DependentComponents_CMOT_SAR()
+                            -- if there are no dependant components
+                                if ScenEdit_GetKeyValue("DependantPackageComponents_CMOT_SAR") == "" then return end
+
+                            -- unbind, and then remove any dependant pacage components
+                                for k, v in pairs(DependantPackageComponents_CMOT_SAR) do
+                                    local _tableUnbind = {}
+                                    _tableUnbind.mode = "remove"
+                                    _tableUnbind.description = v.guidDependantComponent
+                                
+                                    local _tableDelete = {}
+                                    _tableDelete.mode = "remove"
+                                    _tableDelete.description = v.guidDependantComponent
+                                    
+                                    if v.componentTypeDependentComponent == "action" then
+                                        -- unbinds
+                                        ScenEdit_SetEventAction(v.guidCommonComponent, _tableUnbind)
+                                        
+                                        -- removes
+                                        ScenEdit_SetAction(_tableDelete)
+                                        ScenEdit_ClearKeyValue(v.keystorekey)
+                                    end
+                                end 
+                                ScenEdit_ClearKeyValue("DependantPackageComponents_CMOT_SAR")
+                        end
+                    
+                    --Functions to properly clear package keys
                         local function Clear_PackageComponents_CMOT_SAR()
-                            --For initial CMO Environment with no "BetterKeyStore"
+                            -- if the pakage has not initiated any components
                                 if ScenEdit_GetKeyValue("PackageComponents_CMOT_SAR")=="" then return end
                             
                             --Get Size
@@ -1183,6 +1245,7 @@ end
                                 size = size + 1
                             end
 
+                            -- for every component of the package
                             for iteration=1, size do
                                 for Type, v in pairs(PackageComponents_CMOT_SAR) do
                                     local _table = {}
@@ -1232,6 +1295,7 @@ end
 
                     --table
                     Clear_PackageComponents_CMOT_SAR()    --For Key "PackageComponents_CMOT_SAR"
+                    Clear_DependentComponents_CMOT_SAR() -- For Key "DependantPackageComponents_CMOT_SAR"
                     ScenEdit_ClearKeyValue("CMOT_SAR_Aircraft_SurvivorList")
                     ScenEdit_ClearKeyValue("CMOT_SAR_AircraftWreckageList")
 
@@ -1245,7 +1309,11 @@ end
                 end
 
         --Start of Function
-            ClearAllPackageKeyStore()
+            -- mode selection
+            local button = UI_CallAdvancedDialog("Mode Selection", "Select Mode", {"Add Package", "Delete Package"})
+            if button == "" then return nil end
+            ClearPackage_CMOT_SAR()
+            if button == "Delete Package" then return end
 
             local AvailableSides = {}
             for k,v in pairs(VP_GetSides()) do
@@ -1254,9 +1322,6 @@ end
 
 
             --Input for Player SideSelection
-                local Text_PlayerSide = [[
-                Select Player's Side
-                ]]
                 Text_PlayerSide = Text_PlayerSide:gsub("\n        ", "\r\n")
                 local button = UI_CallAdvancedDialog("Side Selection", Text_PlayerSide, AvailableSides)
                 if button == "" then return nil end
@@ -1266,9 +1331,6 @@ end
 
 
             --Input for SAR SideSelection
-                local Text_SARSide = [[
-                Select a Non-Combative, Nuetral Side for SAR
-                ]]
                 Text_SARSide = Text_SARSide:gsub("\n        ", "\r\n")
                 local button = UI_CallAdvancedDialog("Side Selection", Text_SARSide, AvailableSides)
                 if button == "" then return nil end
@@ -1280,11 +1342,6 @@ end
 
 
             --Input for AircraftWreckageLimit
-                local Text_AircraftWreckageLimit = [[
-                Enter the maximum number of Aircraft Wreckage that can be present at a time
-
-                Purpose: This reduces Units in a scenario
-                ]]
                 Text_AircraftWreckageLimit = Text_AircraftWreckageLimit:gsub("\n        ", "\r\n")
 
                 while true do
@@ -1310,15 +1367,6 @@ end
 
 
             --Display Recommendation
-                local Text_Recommendation = [[
-                Recommended Configuration for SAR Side:
-
-                -Set SAR side's Awareness Level to "Blind", to reduce unnecessary sensor calculations
-
-                -Set SAR side as Nuetral to all sides to prevent aggression
-
-                -Set SAR side's playability as "Computer-only"
-                ]]
                 Text_Recommendation = Text_Recommendation:gsub("\n    ", "\r\n")
                 ScenEdit_MsgBox(Text_Recommendation, 6)
 
@@ -1336,10 +1384,6 @@ end
         return
     end
     CMOT_SAR_Aircraft_Init()
-    Text_ReloadScenario = [[
-        For the scripts to take effect:
-        -Kindly save and reload the scenario
-    ]]
     Text_ReloadScenario = Text_ReloadScenario:gsub("\n    ", "\r\n")
     ScenEdit_MsgBox(Text_ReloadScenario, 6)
 --<<//DRIVER CODE>>--

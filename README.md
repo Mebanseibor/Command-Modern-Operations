@@ -1,5 +1,5 @@
 # Command: Modern Operations Resources
-`Last Updated on: 2024/07/13 YYYY/MM/DD`
+`Last Updated on: 2024/07/15 YYYY/MM/DD`
 
 ## Table of Content
 | Content                                         |
@@ -34,6 +34,9 @@
       - Better KeyStore
       - Disable Automatic Detection for PlayerSide
       - Max Fuel for all Aircraft for PlayerSide
+  - ### [CMOT Feature Packs][directorylink-cmotfeaturepacks]
+    - #### [Downed Unit Creates Survivors][directorylink-cmotfeaturepacks-sar]
+      - Adds SAR aspect for scenarios
   - ### 🛠️Other Tools
     - #### [Autohotkeys for CMO][directorylink-othertools-autohotkeys]:
       - Command Modern Operations AHK
@@ -146,9 +149,12 @@
 <!-- Web Links -->
   [weblink-steam-cmo]: https://store.steampowered.com/app/1076160/Command_Modern_Operations/
   [weblink-wiki-siliguricorridor]: https://en.wikipedia.org/wiki/Siliguri_Corridor
+
 <!-- Directories: -->
   [directorylink-importexport-templates-india]: ./ImportExport/Templates/India/
   [directorylink-luascripts-experimental]: ./🗒️Lua%20Scripts/🟡🏗️Experimental/
   [directorylink-luascripts-deployedscripts]: ./🗒️Lua%20Scripts/🟢Deployed%20Scripts/
   [directorylink-luascripts-subjectwiseluascripts]: ./🗒️Lua%20Scripts/Subject%20Wise%20Lua%20Scripts/
   [directorylink-othertools-autohotkeys]: ./🛠️Other%20Tools/Command%20Modern%20Operations%20AHK.ahk
+  [directorylink-cmotfeaturepacks]: ./CMOT%20Feature%20Packs/README.md
+  [directorylink-cmotfeaturepacks-sar]: ./CMOT%20Feature%20Packs/Downed%20Unit%20Creates%20Survivors/README.md

@@ -1,16 +1,16 @@
 --[[
     Development Notes:
         -Survivor probablity depends on:
-            -Unit's Fired upon status
-            -Unit's Out-of-fuel status
-            -Unit's Proficiency
-            -Number of crew
-                -Use "_unit.crew"
-        -Survived pilots/passengers are created within a close proximity from the wreckage
+            - Unit's Fired upon status
+            - Unit's Out-of-fuel status
+            - Unit's Proficiency
+            - Number of crew
+                - Use "_unit.crew"
+        - Survived pilots/passengers are created within a close proximity from the wreckage
         Future enhancements:
-            -What about paratroppers or soldiers that were in the aircraft?
-            -Handle for events that happen over-water
-                -Aircraft don't have lift rafts right?
+            - What about paratroppers or soldiers that were in the aircraft?
+            - Handle for events that happen over-water
+                - Aircraft don't have lift rafts right?
         DBIDs:
             2046 Stranded Personnel (1x)
             2441 Stranded Personnel (1x, Immobile)

@@ -30,7 +30,8 @@ local function CleanUp_CMOT_SAR_Aircraft_SurvivorList()
 
                     --Removing only the Marker's Info
                         CMOT_SAR_Aircraft_SurvivorList[k].marker = nil
-                    --Update Surivor Table
+                    
+                        --Update Surivor Table
                         KeyStore_SetTable("CMOT_SAR_Aircraft_SurvivorList", CMOT_SAR_Aircraft_SurvivorList)
                 end
             end
