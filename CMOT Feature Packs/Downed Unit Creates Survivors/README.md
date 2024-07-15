@@ -53,7 +53,7 @@ The survivors are rescued if they are brought back to base
 - Open the Lua Console
 - Into the Lua Console, copy and paste the content of the lua script [*RunMe.lua*][directorylink-runme]
 - Run the Script within the console
-- Select "**Add Package**"
+- From the pop-up menu, select "**Add Package**"
 - Follow the instructions that will pop-up
 - Create your own SAR team(s)/unit(s)
     - A helicopter is recommended
@@ -82,7 +82,7 @@ The survivors are rescued if they are brought back to base
 - Open the Lua Console
 - Into the Lua Console, copy and paste the content of the lua script [*RunMe.lua*][directorylink-runme]
 - Run the Script within the console
-- Select "**Delete Package**"
+- From the pop-up menu, select "**Delete Package**"
 - Delete any remaining CMOT events, trigger, conditions and actions
     - Automatic deletion for these components will be implemented in future iterations
 - Clear the following keys using the functions:
@@ -190,7 +190,7 @@ flowchart
     subgraph SubgraphClearPackageKeys [Clear all previous keys of the Package]
         direction TB
         ClearPackageKeysComponents[Clear keys representing the package's components]
-        ClearPackageKeysOthers[Clear keys represnting info essential for the package]
+        ClearPackageKeysOthers[Clear keys representing info essential for the package]
 
         ClearPackageKeysComponents --> ClearPackageKeysOthers
     end
@@ -278,8 +278,8 @@ flowchart
 
 
 ## <p id='content-links'>Links🔗</p>
-[GitHub][weblink-github-account-mebanseibor]
-[Repository][weblink-github-repo-cmo]
+- [GitHub][weblink-github-account-mebanseibor]
+- [Repository][weblink-github-repo-cmo]
 
 
 
