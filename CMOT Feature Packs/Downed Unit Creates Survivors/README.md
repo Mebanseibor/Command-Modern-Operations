@@ -10,6 +10,7 @@
 | 🔒[Reserved Variables](#content-reservedvariables)        |
 | 📖[Terminology](#content-terminology)                     |
 | 🔀[Flowchart](#content-flowchart)                         |
+| 🌳[Pack Structure](#content-packstructure)                |
 | 🗒️[Development Notes](#content-developmentnotes)          |
 | 🔗[Links](#content-links)                                 |
 
@@ -28,7 +29,7 @@ The survivors are rescued if they are brought back to base
     - it has a probability of producing a survivor based on:
         - Unit proficiency
         - Whether the unit was destroyed or out-of-fuel
-        - An arbitrary base proficiency, set within the script
+        - An arbitrary base probability, set within the script
 - Downed pilot deploys a `smoke marker` to indicate existance of survivors
 - Survivors are counted as rescued only when their rescuer (an aircraft unit) has landed on an airfield/helipad
 - Downed aircraft due to `Out-of-fuel` status has a slight chance of not producing any survivors
@@ -108,6 +109,7 @@ The survivors are rescued if they are brought back to base
 - ### Ability to disable specific notifications
 - ### Ability to permanently drop selected wreckages
 - ### Disappearance of smoke markers if its survivor is picked up
+- ### Account for paratroppers or personnel that were in the aircraft as cargo
 - ### Clean Removal of the package
 
 
@@ -211,6 +213,61 @@ flowchart
 
     Start --> SubgraphClearPackageKeys --> InputInitial --> SubgraphInitiatePackage --> End
 ```
+
+
+## <p id='content-packstructure'>Pack Structure🌳</p>
+
+```mermaid
+graph
+    %% graphScenLoadedEvent
+    subgraph graphScenLoadedEvent [ScenLoaded Event]
+        direction TB
+        
+        %% graphScenLoadedTrigger
+        subgraph graphScenLoadedTrigger [ScenLoaded Triggers]
+            ScenLoadedEvent[ScenLoaded]
+        end
+        
+        %% graphScenLoadedAction
+        subgraph graphScenLoadedAction [ScenLoaded Actions]
+            BetterKeyStore
+        end
+    end
+
+    %% subgraphSAR
+    subgraph subgraphSAR [SAR Pack]
+        direction TB
+
+        SAR --> component & dependency & keyStore & side & survivor & text & wreckage
+
+        %% SAR
+            wreckageList[list]
+            wreckageCount["count()"]
+            survivorList[list]
+            survivorCount["count()"]
+            
+            side --> player & sar
+            survivor --> survivorList & survivorCount
+            wreckage --> wreckageList & limit & wreckageCount
+
+            %% component
+                component --> getKeyStores
+                component --> removeAll["removeAll()"]
+                
+            %% dependency
+                dependency --> releaseAll["releaseAll()"]
+            
+            %% keyStore
+                keyStore --> clearAll["clearAll()"]
+            
+            && text
+                text --> inputPlayerSide
+    end
+
+    CMOT --> graphScenLoadedEvent
+    CMOT --> subgraphSAR
+```
+
 
 
 ## <p id='content-developmentnotes'>Development Notes🗒️<p>

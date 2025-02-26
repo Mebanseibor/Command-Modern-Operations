@@ -87,8 +87,7 @@ elseif _proficiency == "Ace" then
     prob_proficiency = prob_proficiency_Ace
 end
 prob_proficiency = prob_proficiency*factor_proficiency
-
-
+base_probability = base_probability + prob_proficiency
 
 
 
